@@ -17,16 +17,19 @@ struct accounts
     char* password;
 };
 
-struct students
+static int myStudentId;
+
+struct student
 {
-    int* idNumber;
+    int idNumber;
     char* firstName;
     char* lastName;
     char* gender;
-    char* grade;
+    int grade;
     char* address;
     int addmissionYear;
     char* courses;
+    int numberOfCourses;
 };
 
 struct studentGrade
@@ -46,12 +49,14 @@ struct accounts* accounts(char* data);
 int showMenu(void);
 void loginUser(void);
 int judgeLoginUser(char* userName, char* password);
+struct student getMyStudentDataById(int studentId);
+void printCertificate(struct student);
 
 
 struct accounts* accounts(char* data)
 {
     // get Data from accounts.txt file
-   /* char* tp;
+    char* tp;
     struct accounts* tempStruct = NULL;
     tp = strtok( data, "studentID:");
     puts(tp);
@@ -64,13 +69,25 @@ struct accounts* accounts(char* data)
         }
     }
     return tempStruct;
-    */
+    
 }
 
 int main(int argc, const char * argv[]) {
     
     loginUser();
-    int number = showMenu();
+    int menuNumber = showMenu();
+    struct student myself;
+    myself = getMyStudentDataById(myStudentId);
+    switch (menuNumber) {
+        case 1:
+
+            printCertificate(myself);
+            break;
+            
+        default:
+            break;
+    }
+    
     return 0;
 }
 
@@ -92,16 +109,17 @@ void loginUser(void)
     int loginResult = judgeLoginUser(userName, password);
     if (loginResult == EXIT_SUCCESS)
     {
-        // message
+        // success
         printf("************************************************************\n");
         printf("Welcome to Cornerstone International College of Canada.\n");
         printf("************************************************************\n");
         fflush(stdout);
         sleep(2);
+        myStudentId = 7805666; // 自分の学籍番号
     }
     else
     {
-        // message
+        // failure
         printf("************************************************************\n");
         printf("Your account does not exist. Please try again!\n");
         printf("************************************************************\n");
@@ -157,4 +175,50 @@ int showMenu(void)
     
     return intNumber;
     
+}
+
+struct student getMyStudentDataById(int studentId)
+{
+    // read the data from file
+    // find the data that related with me by student Id
+    struct student myself;
+    myself.address = "West Vancouver";
+    myself.addmissionYear = 2011;
+    myself.courses = "MADP101";// array に変える
+    myself.numberOfCourses = 1; // array に変えて、カウント
+    myself.firstName = "TARO";
+    myself.gender = "Male";
+    myself.grade = 1;
+    myself.idNumber = studentId;
+    myself.lastName = "YAMADA";
+    
+    return myself;
+}
+
+void printCertificate(struct student myself)
+{
+    printf("Dear ");
+    strcmp(myself.gender, "Male") == 0 ? puts("Sir,") : puts("Madam,");
+    printf("\n");
+    
+    printf("This is to certify that " );
+    strcmp(myself.gender, "Male") == 0 ? printf("Mr.") : printf("Ms.");
+    printf("%s %s", myself.firstName, myself.lastName);
+    
+    printf(" with student id %d",myself.idNumber);
+    printf(" is a student at grade %d at CICCC. ",myself.grade);
+    
+    strcmp(myself.gender, "Male") == 0 ? printf("He") : printf("She");
+    printf(" was admitted to our college in %d ",myself.addmissionYear);
+    
+    printf("and has taken %d",myself.numberOfCourses);
+    myself.numberOfCourses == 1 ? puts("course.") : puts("courses.");
+    
+    printf("Currently ");
+    strcmp(myself.gender, "Male") == 0 ? printf("He") : printf("She");
+    printf("resides at %s.",myself.address);
+    printf("\n\n");
+    printf("If you have any question, please don't hesitate to contact us.\n");
+    printf("Thanks,\n");
+    printf("William");
 }
