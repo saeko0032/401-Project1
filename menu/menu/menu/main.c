@@ -11,13 +11,13 @@
 #include <string.h>
 #include <unistd.h>
 
+static int myStudentId;
+
 struct accounts
 {
     int idNumber;
     char* password;
 };
-
-static int myStudentId;
 
 struct student
 {
@@ -49,7 +49,8 @@ struct accounts* accounts(char* data);
 int showMenu(void);
 void loginUser(void);
 int judgeLoginUser(char* userName, char* password);
-struct student getMyStudentDataById(int studentId);
+char** readFileData(FILE *fp, char* fileName);
+struct student getMyStudentDataById(int studentId, char** data);
 void printCertificate(struct student);
 
 
@@ -76,8 +77,10 @@ int main(int argc, const char * argv[]) {
     
     loginUser();
     int menuNumber = showMenu();
+    FILE* fp;
+    char** studentData = readFileData(fp, "students.txt");
     struct student myself;
-    myself = getMyStudentDataById(myStudentId);
+    myself = getMyStudentDataById(myStudentId, studentData);
     switch (menuNumber) {
         case 1:
 
@@ -177,9 +180,19 @@ int showMenu(void)
     
 }
 
-struct student getMyStudentDataById(int studentId)
+struct student getMyStudentDataById(int studentId, char **buf)
 {
     // read the data from file
+ //   FILE* fp;
+ //   char* fileName = "student.txt";
+ //   fp = fopen(fileName,"r");
+ //   if(fp == NULL)
+ //   {
+ //       printf("The file doesn't exist.");
+ //   }
+ //   while
+//    ch = getc(fp);  //1 char
+ 
     // find the data that related with me by student Id
     struct student myself;
     myself.address = "West Vancouver";
@@ -195,6 +208,42 @@ struct student getMyStudentDataById(int studentId)
     return myself;
 }
 
+char** readFileData(FILE *inFile, char* fileName)
+{
+    int lenOfLine = 256; /* 行の長さ（文字列長） */
+    int numOfLine = 30; /* 行の個数 */
+    char ** buf;
+    fileName = "/Users/saekof/Github/401-Project1/menu/menu/menu/Students.txt";
+    inFile = fopen(fileName, "r");
+    if(inFile == NULL)
+    {
+        printf("Can't read the file");
+    }
+    
+    /* read the file by line */
+    for (int i = 0; i < numOfLine; i ++ ) {
+        if ( NULL == fgets( buf[ i ], lenOfLine, inFile ) ) {
+            /* error */
+            for ( i = 0; i < numOfLine; i ++ ) {
+                free( buf[ i ] );
+            }
+            free( buf );
+            fclose( inFile );
+            puts( "*** illegal file status." );
+            return 0;
+        }
+    }
+    
+    /* 資源解放：ファイルをクローズする */
+    fclose( inFile );
+    
+    /* 表示してみる */
+    for (int i = 0; i < numOfLine; i ++ ) {
+        printf( "%s", buf[ i ] );
+    }
+
+    return buf;
+}
 void printCertificate(struct student myself)
 {
     printf("Dear ");
