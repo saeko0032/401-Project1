@@ -173,6 +173,7 @@ void PrintMyCourse(struct student myself,struct courseDetail* course)
 void ListAllCourses(struct courseDetail* course)
 {
     printf("*********************************************\n");
+    printf("The following courses are offered in CICCC:\n");
     for(int i=0; i<3; i++)//need to change length --> the number of the courses
     {
         printf("%d)%s : %s\n",i+1,course[i].courseId,course[i].courseName);
@@ -247,7 +248,7 @@ struct courseDetail* getCousesData(void)//for test
     result[2].courseId = "MADP402";
     result[2].courseName = "Android Programming";
     
-    free(result);
+    free(result);//error
     return result;
 }
 
