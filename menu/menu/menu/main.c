@@ -53,7 +53,6 @@ char** readFileData(FILE *fp, char* fileName);
 struct student getMyStudentDataById(int studentId, char** data);
 void printCertificate(struct student);
 
-
 struct accounts* accounts(char* data)
 {
     // get Data from accounts.txt file
@@ -94,7 +93,6 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-
 void loginUser(void)
 {
     printf("************************************************************\n");
@@ -118,7 +116,7 @@ void loginUser(void)
         printf("************************************************************\n");
         fflush(stdout);
         sleep(2);
-        myStudentId = 7805666; // 自分の学籍番号
+        myStudentId = 7805666; // mystudentId
     }
     else
     {
