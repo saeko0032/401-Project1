@@ -1,6 +1,25 @@
+<<<<<<< HEAD
 studentID:”7813007”
 Pass:”password1”
 studentID:”7813008”
 Pass:”password2”
 studentID:”7813009”
 Pass:”password3”
+=======
+1User:"7813007"
+2Pass:"password1"
+1User:"7813008"
+2Pass:"password2"
+1User:"7813009"
+2Pass:"password3"
+1User:"7813010"
+2Pass:"password4"
+1User:"7813011"
+2Pass:"password5"
+1User:"7813012"
+2Pass:"password6"
+1User:"7813013"
+2Pass:"password7"
+1User:"7813014"
+2Pass:"password8"
+>>>>>>> origin/master
