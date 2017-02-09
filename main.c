@@ -107,16 +107,19 @@ int main(int argc, const char * argv[]) {
     
     int numberOfCourses=0;
     char* CoursesFileName = CoursesFile;
-    char* coursesfileAddress = "/Users/saekof/Github/401-Project1/textfiles/Courses.txt";
+    char* coursesfileAddress = AiFolderPath CoursesFile;
+    //    char* coursesfileAddress = SaekoFolderPath CoursesFile;
     listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
     
     char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = "/Users/saekof/Github/401-Project1/textfiles/Students.txt";
+    char* studentsfileAddress = AiFolderPath StudentsFile;
+    //    char* studentsfileAddress = SaekoFolderPath StudentsFile;
     int numberOfStudents = 0;
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
     
     char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = "/Users/saekof/Github/401-Project1/textfiles/StudentsCourses.txt";
+    char* studentsCoursesFileAddress = AiFolderPath StudentsCoursesFile;
+    //    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
     int numberOfStudentsCourses = 0;
     
     listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
@@ -168,7 +171,7 @@ void loginUser(void)
     printf("************************************************************\n");
     printf("Username:");
     
-    fgets(userName, 256, stdin);// after logout auto into userName \n
+    fgets(userName, 256, stdin);
     if(userName[0] == '\n')
     {
         fgets(userName, 256, stdin);
@@ -206,7 +209,8 @@ int judgeLoginUser(char* userName, char* password)
     int result = -1;
     
     char* accountsFileName = AccountsFile;
-    char* accountsFileAddress = "/Users/saekof/Github/401-Project1/textfiles/Accounts.txt";
+    char* accountsFileAddress = AiFolderPath AccountsFile;
+    //    char* accountsFileAddress = SaekoFolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
@@ -325,7 +329,7 @@ void printMyCourses(struct Student myself,int numberOfCourses)
 }
 
 /**
- This function is to print my courses.
+ This function is to print my transcript.
  */
 void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
 {
@@ -417,7 +421,8 @@ void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
 void listAllStudents(int numberOfStudents)
 {
     char* accountsFileName = AccountsFile;
-    char* accountsFileAddress = "/Users/saekof/Github/401-Project1/textfiles/Accounts.txt";
+    char* accountsFileAddress = AiFolderPath AccountsFile;
+    //    char* accountsFileAddress = SaekoFolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
@@ -516,7 +521,7 @@ int getTheStartIndex(char* filename, char firstChar)
     else if(strcmp(filename, CoursesFile)==0 && firstChar=='1') //courseID
     {
         return 10;
-    }//
+    }
     else if(strcmp(filename, CoursesFile)==0 && firstChar=='2') //name
     {
         return 6;
@@ -883,7 +888,8 @@ struct Student getMyStudentDataByID(char* studentID)
 {
     //Extracting students information from the file
     char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = "/Users/saekof/Github/401-Project1/textfiles/Students.txt";
+    char* studentsfileAddress = AiFolderPath StudentsFile;
+//    char* studentsfileAddress = SaekoFolderPath StudentsFile;
     int numberOfStudents = 0;
     
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
