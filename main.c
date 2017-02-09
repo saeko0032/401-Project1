@@ -10,7 +10,7 @@
 #define StudentsCoursesFile "StudentsCourses.txt"
 
 #define AiFolderPath "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/"
-#define SaekoFolderPath "/Users/saekof/Github/401-Project1/textfiles/"
+#define SaekoFolderPath "/Users/fukuisaeko/GitHub/401-Project/textfiles/"
 
 struct Account
 {
