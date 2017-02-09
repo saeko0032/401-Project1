@@ -9,6 +9,10 @@
 #define StudentsFile "Students.txt"
 #define StudentsCoursesFile "StudentsCourses.txt"
 
+#define AiFolderPath "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/"
+#define SaekoFolderPath "/Users/fukuisaeko/GitHub/401-Project/textfiles/"
+
+
 struct Account
 {
     char* studentID;
@@ -87,7 +91,8 @@ struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* f
 int main(int argc, const char * argv[]) {
     int numberOfCourses=0;
     char* CoursesFileName = CoursesFile;
-    char* coursesfileAddress = "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/Courses.txt";
+    char* coursesfileAddress = AiFolderPath CoursesFile;
+//    char* coursesfileAddress = SaekoFolderPath CoursesFile;
     
     loginUser();
     struct Student myself = getMyStudentDataByID(myStudentID);
@@ -176,7 +181,8 @@ int judgeLoginUser(char* userName, char* password)
     int result = -1;
     
     char* accountsFileName = AccountsFile;
-    char* accountsFileAddress = "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/Accounts.txt";
+    char* accountsFileAddress = AiFolderPath AccountsFile;
+//    char* accountsFileAddress = SaekoFolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
@@ -219,6 +225,10 @@ int showMenu(void)
     
     char inputNumber[2];
     fgets(inputNumber, 2, stdin);
+    if(inputNumber[0] == '\n')
+    {
+        fgets(inputNumber, 2, stdin);
+    }
     int intNumber = atoi(inputNumber);
     
     if(intNumber<0 || 10 <= intNumber)
@@ -277,7 +287,7 @@ void PrintMyCourse(struct Student myself,struct Course* listOfCourses,int number
        }
     }
     printf("*********************************************\n");
-    sleep(2);
+    sleep(3);
 }
 
 //menu3
@@ -290,13 +300,15 @@ void printTranscript(struct Student myself)
     printf("Here is your transcript:\n");
     
     char* coursesFileName = CoursesFile;
-    char* coursesFileAddress = "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/Courses.txt";
+    char* coursesFileAddress = AiFolderPath CoursesFile;
+//    char* coursesFileAddress = SaekoFolderPath CoursesFile;
     int numberOfCourses = 0;
     
     listOfCourses = getListOfCourseNameFromFile(coursesFileAddress, coursesFileName, &numberOfCourses);
     
     char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/StudentsCourses.txt";
+    char* studentsCoursesFileAddress = AiFolderPath StudentsCoursesFile;
+//    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
     int numberOfStudentsCourses = 0;
     
     listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
@@ -327,7 +339,8 @@ void printTranscript(struct Student myself)
 void GPA(struct Student myself)
 {
     char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/StudentsCourses.txt";
+    char* studentsCoursesFileAddress = AiFolderPath StudentsCoursesFile;
+//    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
     int numberOfStudentsCourses = 0;
     listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
     
@@ -352,7 +365,7 @@ void GPA(struct Student myself)
     }
     printf("Your GPA is %.2f\n",GPA);
     printf("*********************************************\n");
-    sleep(2);
+    sleep(3);
 }
 //6
 void ListAllCourses(struct Course* listOfCourses,int numberOfCourses)
@@ -364,21 +377,21 @@ void ListAllCourses(struct Course* listOfCourses,int numberOfCourses)
         printf("%d)%s : %s\n",i+1,listOfCourses[i].courseID,listOfCourses[i].name);
     }
     printf("*********************************************\n");
-    sleep(2);
+    sleep(3);
 }
 void logoutUser(struct Student myself)
 {
-    myself.studentID = NULL;
+    myself.studentID = 0;
     myself.name = NULL;
     myself.gender = NULL;
-    myself.grade = NULL;
+    myself.grade = 0;
     myself.address = NULL;
-    myself.admission_year = NULL;
+    myself.admission_year = 0;
     myself.courses = NULL;
-    myself.numberOfCourses = NULL;
+    myself.numberOfCourses = 0;
     
     myStudentID = NULL;
-    sleep(2);
+    sleep(3);
     loginUser();
 }
 /* File */
@@ -792,7 +805,8 @@ struct Student getMyStudentDataByID(char* studentID)
 {
     //Extracting students information from the file
     char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/Students.txt";
+    char* studentsfileAddress = AiFolderPath StudentsFile;
+//    char* studentsfileAddress = SaekoFolderPath StudentsFile;
     int numberOfStudents = 0;
     
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
@@ -1021,5 +1035,3 @@ struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* f
     *numberOfCourses = numberOfStudentCourseReadFromFileSoFar;
     return listOfStudentCourses;
 }
-
-
