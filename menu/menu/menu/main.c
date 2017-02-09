@@ -22,12 +22,13 @@ struct accounts
 struct student
 {
     int idNumber;
-    char name[10];
-    char gender[7];
+    char* firstName;
+    char* lastName;
+    char* gender;
     int grade;
-    char address[20];
+    char* address;
     int addmissionYear;
-    char courses[40];
+    char* courses;
     int numberOfCourses;
 };
 
@@ -48,10 +49,10 @@ struct accounts* accounts(char* data);
 int showMenu(void);
 void loginUser(void);
 int judgeLoginUser(char* userName, char* password);
-struct student* readFileData(FILE *inFile, char* fileName);
+char** readFileData(FILE *fp, char* fileName);
 struct student getMyStudentDataById(int studentId, char** data);
 void printCertificate(struct student);
-int mysubstr( char *t, const char *s, int pos, int len );
+
 
 struct accounts* accounts(char* data)
 {
@@ -69,16 +70,15 @@ struct accounts* accounts(char* data)
         }
     }
     return tempStruct;
-
+    
 }
 
 int main(int argc, const char * argv[]) {
-
+    
     loginUser();
     int menuNumber = showMenu();
     FILE* fp;
-    struct student* studentData;
-    studentData = readFileData(fp, "students.txt");
+    char** studentData = readFileData(fp, "students.txt");
     struct student myself;
     myself = getMyStudentDataById(myStudentId, studentData);
     switch (menuNumber) {
@@ -86,13 +86,14 @@ int main(int argc, const char * argv[]) {
 
             printCertificate(myself);
             break;
-
+            
         default:
             break;
     }
-
+    
     return 0;
 }
+
 
 void loginUser(void)
 {
@@ -100,14 +101,14 @@ void loginUser(void)
     printf("Please enter your account to login:\n");
     printf("************************************************************\n");
     printf("Username:");
-
+    
     char userName[256];
     char password[256];
     fgets(userName, 256, stdin);
-
+    
     printf("Password:");
     fgets(password, 256, stdin);
-
+    
     int loginResult = judgeLoginUser(userName, password);
     if (loginResult == EXIT_SUCCESS)
     {
@@ -117,7 +118,7 @@ void loginUser(void)
         printf("************************************************************\n");
         fflush(stdout);
         sleep(2);
-        myStudentId = 7805666; // mystudentId
+        myStudentId = 7805666; // 自分の学籍番号
     }
     else
     {
@@ -134,9 +135,9 @@ void loginUser(void)
 int judgeLoginUser(char* userName, char* password)
 {
     int result;
-
+    
     //if(userName == userName && password == password) //from file
-    if(1)
+   if(1)
     {
         result = EXIT_SUCCESS;
     }
@@ -165,136 +166,103 @@ int showMenu(void)
     printf("************************************************************\n");
     printf("\n");
     printf("Enter the number corresponding to each item to proceed:\n");
-
+    
     char inputNumber[2];
     fgets(inputNumber, 2, stdin);
     int intNumber = atoi(inputNumber);
-
+    
     if(intNumber<0 || 10 <= intNumber)
     {
         printf("You Entered wrong number\nbye\n");
     }
-
+    
     return intNumber;
-
+    
 }
 
 struct student getMyStudentDataById(int studentId, char **buf)
 {
     // read the data from file
-    //   FILE* fp;
-    //   char* fileName = "student.txt";
-    //   fp = fopen(fileName,"r");
-    //   if(fp == NULL)
-    //   {
-    //       printf("The file doesn't exist.");
-    //   }
-    //   while
-    //    ch = getc(fp);  //1 char
-
+ //   FILE* fp;
+ //   char* fileName = "student.txt";
+ //   fp = fopen(fileName,"r");
+ //   if(fp == NULL)
+ //   {
+ //       printf("The file doesn't exist.");
+ //   }
+ //   while
+//    ch = getc(fp);  //1 char
+ 
     // find the data that related with me by student Id
     struct student myself;
- //   myself.address = "West Vancouver";
+    myself.address = "West Vancouver";
     myself.addmissionYear = 2011;
-   // myself.courses = "MADP101";// array に変える
+    myself.courses = "MADP101";// array に変える
     myself.numberOfCourses = 1; // array に変えて、カウント
-//    myself.name = "TARO";
-//    myself.gender = "Male";
+    myself.firstName = "TARO";
+    myself.gender = "Male";
     myself.grade = 1;
     myself.idNumber = studentId;
-
+    myself.lastName = "YAMADA";
+    
     return myself;
 }
 
-struct student* readFileData(FILE *inFile, char* fileName)
+char** readFileData(FILE *inFile, char* fileName)
 {
-    fileName = "/Users/fukuisaeko/Github/401-Project1/textfiles/Students.txt";
+    int lenOfLine = 256; /* 行の長さ（文字列長） */
+    int numOfLine = 30; /* 行の個数 */
+    char ** buf;
+    fileName = "/Users/saekof/Github/401-Project1/menu/menu/menu/Students.txt";
     inFile = fopen(fileName, "r");
-    char readLine[20];
-    struct student* studentsData[5];
-    studentsData[0] = (struct student*) malloc(sizeof(struct student));
-
     if(inFile == NULL)
     {
         printf("Can't read the file");
     }
-    int counter = 0;
-
-    while(fgets(readLine, 256, inFile) != NULL)
-    {
-        if(strncmp("studentID", readLine,9) == 0)
-        {
-            studentsData[counter] = (struct student*) malloc(sizeof(struct student));
-            char *temp;
-            temp = strtok(readLine, "”");
-            temp = strtok(NULL, "”");
-            studentsData[counter]->idNumber = atoi(temp);
-            printf("%d", studentsData[counter]->idNumber);
+    
+    /* read the file by line */
+    for (int i = 0; i < numOfLine; i ++ ) {
+        if ( NULL == fgets( buf[ i ], lenOfLine, inFile ) ) {
+            /* error */
+            for ( i = 0; i < numOfLine; i ++ ) {
+                free( buf[ i ] );
+            }
+            free( buf );
+            fclose( inFile );
+            puts( "*** illegal file status." );
+            return 0;
         }
-        if(strncmp("name:", readLine,3) == 0)
-        {
-            char *temp;
-            temp = strtok(readLine, "”");
-            temp = strtok(NULL, "”");
-            strncpy(studentsData[counter]->name, temp, sizeof(studentsData[counter]->name));
-        }
-        if(strncmp("gender", readLine,4) == 0)
-        {
-            char *temp;
-            temp = strtok(readLine, "”");
-            temp = strtok(NULL, "”");
-            strncpy(studentsData[counter]->gender,temp, sizeof(studentsData[counter]->gender));
-        }
-        if(strncmp("address", readLine,4) == 0)
-        {
-            char *temp;
-            temp = strtok(readLine, "”");
-            temp = strtok(NULL, "”");
-            strncpy(studentsData[counter]->address, temp,sizeof(studentsData[counter]->address));
-        }
-        if(strncmp("admission_year", readLine,4) == 0)
-        {
-            char *temp;
-            temp = strtok(readLine, "”");
-            temp = strtok(NULL, "”");
-            studentsData[counter]->addmissionYear = atoi(temp);
-        }
-        if(strncmp("courses", readLine,4) == 0)
-        {
-            char *temp;
-            temp = strtok(readLine, "”");
-            temp = strtok(NULL, "”");
-            strncpy(studentsData[counter]->courses, temp, sizeof(studentsData[counter]->courses));
-            counter++;
-        }
-        //if(studentsData[counter].idNumber != 0) counter++;
-
+    }
+    
+    /* 資源解放：ファイルをクローズする */
+    fclose( inFile );
+    
+    /* 表示してみる */
+    for (int i = 0; i < numOfLine; i ++ ) {
+        printf( "%s", buf[ i ] );
     }
 
-    /* 資源解放：ファイルをクローズする */
-    //fclose( inFile );
-
-    // return &studentsData[0]; .,ここがダメ
+    return buf;
 }
 void printCertificate(struct student myself)
 {
     printf("Dear ");
     strcmp(myself.gender, "Male") == 0 ? puts("Sir,") : puts("Madam,");
     printf("\n");
-
+    
     printf("This is to certify that " );
     strcmp(myself.gender, "Male") == 0 ? printf("Mr.") : printf("Ms.");
-    printf("%s", myself.name);
-
+    printf("%s %s", myself.firstName, myself.lastName);
+    
     printf(" with student id %d",myself.idNumber);
     printf(" is a student at grade %d at CICCC. ",myself.grade);
-
+    
     strcmp(myself.gender, "Male") == 0 ? printf("He") : printf("She");
     printf(" was admitted to our college in %d ",myself.addmissionYear);
-
+    
     printf("and has taken %d",myself.numberOfCourses);
     myself.numberOfCourses == 1 ? puts("course.") : puts("courses.");
-
+    
     printf("Currently ");
     strcmp(myself.gender, "Male") == 0 ? printf("He") : printf("She");
     printf("resides at %s.",myself.address);
@@ -302,14 +270,4 @@ void printCertificate(struct student myself)
     printf("If you have any question, please don't hesitate to contact us.\n");
     printf("Thanks,\n");
     printf("William");
-}
-
-int mysubstr( char *t, const char *s, int pos, int len )
-{
-    if( pos < 0 || len < 0 || len > strlen(s) )
-        return -1;
-    for( s += pos; *s != '\0' && len > 0; len-- )
-        *t++ = *s++;
-    *t = '\0';
-    return 0;
 }
