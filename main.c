@@ -9,6 +9,10 @@
 #define StudentsFile "Students.txt"
 #define StudentsCoursesFile "StudentsCourses.txt"
 
+#define AiFolderPath "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/"
+#define SaekoFolderPath "/Users/fukuisaeko/GitHub/401-Project/textfiles/"
+
+
 struct Account
 {
     char* studentID;
