@@ -1,3 +1,10 @@
+//
+//  main.c
+//
+//  Created by AY SF on 2017-02-02.
+//  Copyright © 2017 CICCC. All rights reserved.
+//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,87 +50,103 @@ struct StudentsCourse
     int mark;
 };
 
-//Global Variables
+// Global Variables
 struct Student* listOfStudents;
 struct Account* listOfAccounts;
 struct Course* listOfCourses;
 struct StudentsCourse* listOfStudentCourses;
 static char* myStudentID;
 
+// ali methods
 char firstChar(char* line);
 int strLength(char* line);
 char* substring(char* line, int startIndex, int endIndex);
 int getTheStartIndex(char* filename, char firstChar);
 char** splitString(char* a_str, const char a_delim, int* numberOfComponents);
-
 char** readFile(char* fileAddress, int* numberOfLines);
 int numberOfItemsPerRecordInFile(char* fileName);
-
 int convertToNumber(char *);
 
+// basic method
 void loginUser(void);
 int judgeLoginUser(char* userName, char* password);
 int showMenu(void);
+float getMyGPA(struct Student myself, int numberOfStudentsCourses);
 
-void printCertificate(struct Student); // menu 1
-void printTranscript(struct Student); // menu 3
-void printMyRanking(struct Student); // menu 5
-void listAllStudents(void); // menu 7
-//add
-void ListAllCourses(struct Course* listOfCourses,int numberOfCourses);//6
-void PrintMyCourse(struct Student myself,struct Course* listOfCourses,int numberOfCourses);//2
-void GPA(struct Student myself);//4
+// menu method
+void printMyCertificate(struct Student);
+void printMyCourses(struct Student myself,int numberOfCourses);
+void printMyTranscript(struct Student, int numberOfStudentsCourses);
+void printMyGPA(struct Student myself, int numberOfStudentsCourses);
+void printMyRanking(struct Student, int numberOfStudentsCourses);
+void listAllCourses(struct Course* listOfCourses,int numberOfCourses);
+void listAllStudents(int numberOfStudents);
 void logoutUser(struct Student myself);
 
+// Student method
 struct Student createAStudent(char* studentID, char* name, char* gender, int grade, char* address, int admission_year, char* courses[], int numberOfCourses);
 struct Student* getListOfStudentFromFile(char* fileAddress, char* fileName, int* numberOfStudents);
 struct Student getMyStudentDataByID(char* studentID);
 
+// Account method
 struct Account createAnAccount(char* studentID, char*password);
 struct Account* getListofAccountFromFile(char* fileAddress, char* fileName, int* numberOfAccounts);
 
+// Course method
 struct Course createACourse(char* courseID, char* name);
 struct Course* getListOfCourseNameFromFile(char* fileAddress, char* fileName, int* numberOfCourses);
 
+// StudentCourse method
 struct StudentsCourse createAStudentCourse(char* studentID, char* courseID, int mark);
 struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* fileName, int* numberOfCourses);
 
-float getMyGPA(struct Student myself);
 
 
 int main(int argc, const char * argv[]) {
+    loginUser();
+    
     int numberOfCourses=0;
     char* CoursesFileName = CoursesFile;
     char* coursesfileAddress = "/Users/saekof/Github/401-Project1/textfiles/Courses.txt";
-    
-    loginUser();
-    struct Student myself = getMyStudentDataByID(myStudentID);
     listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
+    
+    char* studentsFileName = StudentsFile;
+    char* studentsfileAddress = "/Users/saekof/Github/401-Project1/textfiles/Students.txt";
+    int numberOfStudents = 0;
+    listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
+    
+    char* studentsCoursesFileName = StudentsCoursesFile;
+    char* studentsCoursesFileAddress = "/Users/saekof/Github/401-Project1/textfiles/StudentsCourses.txt";
+    int numberOfStudentsCourses = 0;
+    
+    listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
+    
+    struct Student myself = getMyStudentDataByID(myStudentID);
     
     int exit = 0;
     while(exit == 0){
         int menuNumber = showMenu();
         switch (menuNumber) {
             case 1:
-                printCertificate(myself);
+                printMyCertificate(myself);
                 break;
             case 2:
-                PrintMyCourse(myself,listOfCourses,numberOfCourses);
+                printMyCourses(myself,numberOfCourses);
                 break;
             case 3:
-                printTranscript(myself);
+                printMyTranscript(myself, numberOfStudentsCourses);
                 break;
             case 4:
-                GPA(myself);
+                printMyGPA(myself, numberOfStudentsCourses);
                 break;
             case 5:
-                printMyRanking(myself);
+                printMyRanking(myself, numberOfStudentsCourses);
                 break;
             case 6:
-                ListAllCourses(listOfCourses,numberOfCourses);
+                listAllCourses(listOfCourses,numberOfCourses);
                 break;
             case 7:
-                listAllStudents();
+                listAllStudents(numberOfStudents);
                 break;
             case 8:
                 logoutUser(myself);
@@ -137,8 +160,8 @@ int main(int argc, const char * argv[]) {
 
 void loginUser(void)
 {
-    char userName[256] = {0};
-    char password[256] = {0};
+    char userName[256];
+    char password[256];
     
     printf("************************************************************\n");
     printf("Please enter your account to login:\n");
@@ -188,7 +211,6 @@ int judgeLoginUser(char* userName, char* password)
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
     
-    
     //testing
     for(int i=0; i<numberOfAccounts; i++)
     {
@@ -226,6 +248,10 @@ int showMenu(void)
     
     char inputNumber[2];
     fgets(inputNumber, 2, stdin);
+    if(inputNumber[0] == '\n')
+    {
+        fgets(inputNumber, 2, stdin);
+    }
     int intNumber = atoi(inputNumber);
     
     if(intNumber<0 || 10 <= intNumber)
@@ -237,8 +263,11 @@ int showMenu(void)
     
 }
 
-// menu1
-void printCertificate(struct Student myself)
+/**
+ This function is to print my certification.
+ @param myself my student information
+ */
+void printMyCertificate(struct Student myself)
 {
     printf("Dear ");
     strcmp(myself.gender, "male") == 0 ? puts("Sir,") : puts("Madam,");
@@ -265,20 +294,25 @@ void printCertificate(struct Student myself)
     printf("Thanks,\n");
     printf("William\n");
     fflush(stdout);
-    sleep(5);
+    sleep(4);
 }
 
-//2
-void PrintMyCourse(struct Student myself,struct Course* listOfCourses,int numberOfCourses)
+/**
+ This function is to print my courses.
+ */
+void printMyCourses(struct Student myself,int numberOfCourses)
 {
     printf("*********************************************\n");
-    if(strcmp(myself.gender, "male") == 0){
-        printf("Hi. Mr %s,\n",myself.name);
-    }else{
-        printf("Hi. Ms. %s,\n",myself.name);
+    if(strcmp(myself.gender, "male") == 0)
+    {
+        printf("Hi Mr. %s,\n",myself.name);
+    }
+    else
+    {
+        printf("Hi Ms. %s,\n",myself.name);
     }
     printf("You have taken the following courses:\n");
-    for(int i=0; i<numberOfCourses; i++)
+    for(int i=0; i< numberOfCourses; i++)
     {
         for(int j=i; j<myself.numberOfCourses; j++)
         {
@@ -287,11 +321,13 @@ void PrintMyCourse(struct Student myself,struct Course* listOfCourses,int number
         }
     }
     printf("*********************************************\n");
-    sleep(2);
+    sleep(4);
 }
 
-// menu3
-void printTranscript(struct Student myself)
+/**
+ This function is to print my courses.
+ */
+void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
 {
     printf("Hi ");
     strcmp(myself.gender, "male") == 0 ? printf("Mr.") : printf("Ms.");
@@ -299,21 +335,10 @@ void printTranscript(struct Student myself)
     
     printf("Here is your transcript:\n");
     
-    char* coursesFileName = CoursesFile;
-    char* coursesFileAddress = "/Users/saekof/Github/401-Project1/textfiles/Courses.txt";
-    int numberOfCourses = 0;
-    
-    listOfCourses = getListOfCourseNameFromFile(coursesFileAddress, coursesFileName, &numberOfCourses);
-    
-    char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = "/Users/saekof/Github/401-Project1/textfiles/StudentsCourses.txt";
-    int numberOfStudentsCourses = 0;
-    
-    listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
     int counter = 1;
     for(int i = 0; i < myself.numberOfCourses; i++)
     {
-        for(int j=0; j<4; j++)
+        for(int j=0; j < numberOfStudentsCourses; j++)
         {
             
             if(strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
@@ -329,61 +354,67 @@ void printTranscript(struct Student myself)
             }
         }
     }
-    float myGPA = getMyGPA(myself);
+    float myGPA = getMyGPA(myself, numberOfStudentsCourses);
     printf("YOUR GPA IS:%.2f\n", myGPA);
     fflush(stdout);
-    sleep(5);
+    sleep(4);
 }
-//4
-void GPA(struct Student myself)
+
+/**
+ This function is to print my GPA.
+ */
+void printMyGPA(struct Student myself, int numberOfStudentsCourses)
 {
-    float GPA = getMyGPA(myself);
+    float GPA = getMyGPA(myself, numberOfStudentsCourses);
     
     printf("*********************************************\n");
     if(strcmp(myself.gender, "male") == 0){
-        printf("Hi. Mr %s,\n",myself.name);
+        printf("Hi Mr. %s,\n",myself.name);
     }else{
-        printf("Hi. Ms. %s,\n",myself.name);
+        printf("Hi Ms. %s,\n",myself.name);
     }
     printf("Your GPA is %.2f\n",GPA);
     printf("*********************************************\n");
-    sleep(2);
+    sleep(4);
 }
-// menu5
-void printMyRanking(struct Student myself)
+
+/**
+ This function is to print my Ranking.
+ */
+void printMyRanking(struct Student myself, int numberOfStudentsCourses)
 {
     printf("Hi ");
-    strcmp(myself.gender, "male") == 0 ? puts("Sir,") : puts("Madam,");
-    printf("\n");
-    
-    printf("This is to certify that " );
-    strcmp(myself.gender, "Male") == 0 ? printf("Mr.") : printf("Ms.");
+    strcmp(myself.gender, "male") == 0 ? printf("Mr.") : printf("Ms.");
     printf("%s,\n", myself.name);
     
-    float GPA = getMyGPA(myself);
-    
+    float GPA = getMyGPA(myself, numberOfStudentsCourses);
     
     printf("Your GPA is %2.f and therefore your rank is",GPA);
     // think about that
     
     fflush(stdout);
-    sleep(5);
+    sleep(4);
 }
 
-//6
-void ListAllCourses(struct Course* listOfCourses,int numberOfCourses)
+/**
+ This function is to list all courses.
+ */
+void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
 {
     printf("*********************************************\n");
     printf("The following courses are offered in CICCC\n");
-    for(int i=0; i<numberOfCourses; i++)
+    for(int i = 0; i < numberOfCourses; i++)
     {
-        printf("%d)%s : %s\n",i+1,listOfCourses[i].courseID,listOfCourses[i].name);
+        printf("%d) %s : %s\n",i+1,listOfCourses[i].courseID,listOfCourses[i].name);
     }
     printf("*********************************************\n");
-    sleep(2);
+    sleep(4);
 }
-// menu 7
-void listAllStudents(void)
+
+/**
+ This function is to list all students.
+ */
+void listAllStudents(int numberOfStudents)
 {
     char* accountsFileName = AccountsFile;
     char* accountsFileAddress = "/Users/saekof/Github/401-Project1/textfiles/Accounts.txt";
@@ -391,25 +422,21 @@ void listAllStudents(void)
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
     
-    char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = "/Users/saekof/Github/401-Project1/textfiles/Students.txt";
-    int numberOfStudents = 0;
-    
-    listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
-    
-    printf("There are %d students in CICCC as following",numberOfStudents);
-    
+    printf("There are %d students in CICCC as following:",numberOfStudents);
+    int counter = 1;
     for(int i = 0; i< numberOfAccounts; i++)
     {
         for(int j = 0; j < numberOfStudents; j++)
         {
             if(strcmp(listOfAccounts[i].studentID, listOfStudents[j].studentID) == 0)
             {
-                printf("%s:%s\n",listOfStudents[j].name, listOfStudents[j].studentID);
+                printf("%d) %s: %s\n",counter,listOfStudents[j].name, listOfStudents[j].studentID);
+                counter++;
             }
         }
         
     }
+    sleep(4);
 }
 
 void logoutUser(struct Student myself)
@@ -424,29 +451,24 @@ void logoutUser(struct Student myself)
     myself.numberOfCourses = 0;
     
     myStudentID = NULL;
-    sleep(2);
+    sleep(4);
     loginUser();
 }
 
-float getMyGPA(struct Student myself)
+float getMyGPA(struct Student myself, int numberOfStudentsCourses)
 {
-    char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = "/Users/saekof/Github/401-Project1/textfiles/StudentsCourses.txt";
-    int numberOfStudentsCourses = 0;
-    listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
-    
-    float Mark = 0;
+    float mark = 0;
     int count = 0;
     float GPA = 0;
     
     for(int i = 0; i < numberOfStudentsCourses; i++){
         if(strcmp(myself.studentID, listOfStudentCourses[i].studentID) == 0)
         {
-            Mark = Mark + listOfStudentCourses[i].mark;
+            mark = mark + listOfStudentCourses[i].mark;
             count++;
         }
     }
-    GPA = Mark / count;
+    GPA = mark / count;
     return GPA;
 }
 
