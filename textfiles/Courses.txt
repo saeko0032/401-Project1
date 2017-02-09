@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-courseID:”MADP101”
-name:”Objective-C”
-
-courseID:”MADP301”
-name:”Project Management”
-
-courseID:”MADP402”
-name:”Android Programming”
-=======
 1courseID:"MADP101"
 2name:"Objective-C"
 1courseID:"MADP202"
@@ -16,4 +6,3 @@ name:”Android Programming”
 2name:"Project Management"
 1courseID:"MADP402"
 2name:"Android Programming"
->>>>>>> origin/master
