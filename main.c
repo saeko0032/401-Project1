@@ -104,61 +104,7 @@ struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* f
 
 int main(int argc, const char * argv[]) {
     loginUser();
-    
-    int numberOfCourses=0;
-    char* CoursesFileName = CoursesFile;
-    char* coursesfileAddress = SaekoFolderPath CoursesFile;
-    //    char* coursesfileAddress = SaekoFolderPath CoursesFile;
-    listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
-    
-    char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = SaekoFolderPath StudentsFile;
-    //    char* studentsfileAddress = SaekoFolderPath StudentsFile;
-    int numberOfStudents = 0;
-    listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
-    
-    char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
-    //    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
-    int numberOfStudentsCourses = 0;
-    
-    listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
-    
-    struct Student myself = getMyStudentDataByID(myStudentID);
-    
-    int exit = 0;
-    while(exit == 0){
-        int menuNumber = showMenu();
-        switch (menuNumber) {
-            case 1:
-                printMyCertificate(myself);
-                break;
-            case 2:
-                printMyCourses(myself,numberOfCourses);
-                break;
-            case 3:
-                printMyTranscript(myself, numberOfStudentsCourses);
-                break;
-            case 4:
-                printMyGPA(myself, numberOfStudentsCourses);
-                break;
-            case 5:
-                printMyRanking(myself, numberOfStudentsCourses);
-                break;
-            case 6:
-                listAllCourses(listOfCourses,numberOfCourses);
-                break;
-            case 7:
-                listAllStudents(numberOfStudents);
-                break;
-            case 8:
-                logoutUser(myself);
-                break;
-            case 9:
-                return 0;
-        }
-    }
-    return 0;
+    while(showMenu());
 }
 
 void loginUser(void)
@@ -263,8 +209,56 @@ int showMenu(void)
         printf("You Entered wrong number\nbye\n");
     }
     
-    return intNumber;
+    int numberOfCourses=0;
+    char* CoursesFileName = CoursesFile;
+    char* coursesfileAddress = SaekoFolderPath CoursesFile;
+    //    char* coursesfileAddress = SaekoFolderPath CoursesFile;
+    listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
     
+    char* studentsFileName = StudentsFile;
+    char* studentsfileAddress = SaekoFolderPath StudentsFile;
+    //    char* studentsfileAddress = SaekoFolderPath StudentsFile;
+    int numberOfStudents = 0;
+    listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
+    
+    char* studentsCoursesFileName = StudentsCoursesFile;
+    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
+    //    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
+    int numberOfStudentsCourses = 0;
+    
+    listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
+    
+    struct Student myself = getMyStudentDataByID(myStudentID);
+    
+    switch (intNumber) {
+        case 1:
+            printMyCertificate(myself);
+            return 1;
+        case 2:
+            printMyCourses(myself,numberOfCourses);
+            return 1;
+        case 3:
+            printMyTranscript(myself, numberOfStudentsCourses);
+            return 1;
+        case 4:
+            printMyGPA(myself, numberOfStudentsCourses);
+            return 1;
+        case 5:
+            printMyRanking(myself, numberOfStudentsCourses);
+            return 1;
+        case 6:
+            listAllCourses(listOfCourses,numberOfCourses);
+            return 1;
+        case 7:
+            listAllStudents(numberOfStudents);
+            return 1;
+        case 8:
+            logoutUser(myself);
+            return 1;
+        case 9:
+            return 0;
+    }
+    return 0;
 }
 
 /**
@@ -487,7 +481,10 @@ void logoutUser(struct Student myself)
     
     myStudentID = NULL;
     sleep(4);
+    
     loginUser();
+    showMenu();
+    
 }
 
 float getMyGPA(struct Student myself, int numberOfStudentsCourses)
