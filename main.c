@@ -105,6 +105,8 @@ struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* f
 int main(int argc, const char * argv[]) {
     loginUser();
     while(showMenu());
+    
+    return 0;
 }
 
 void loginUser(void)
@@ -325,7 +327,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
 {
     printf("Hi ");
     strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
-    printf("%s\n", myself.name);
+    printf("%s,\n", myself.name);
     
     printf("Here is your transcript:\n");
     
