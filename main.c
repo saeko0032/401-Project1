@@ -376,7 +376,7 @@ void printMyGPA(struct Student myself, int numberOfStudentsCourses)
 void printMyRanking(struct Student myself, int numberOfStudentsCourses)
 {
     printf("Hi ");
-    strcmp(myself.gender, "male") == 0 ? printf("Mr.") : printf("Ms.");
+    strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
     printf("%s,\n", myself.name);
     
     float myGPA = getMyGPA(myself, numberOfStudentsCourses);
@@ -413,7 +413,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
         }
     }
     
-    printf("Your GPA is %.2f and therefore your rank is %d",myGPA, myRank);
+    printf("Your GPA is %.2f and therefore your rank is %d.",myGPA, myRank);
     fflush(stdout);
     sleep(4);
 }
