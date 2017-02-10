@@ -16,8 +16,8 @@
 #define StudentsFile "Students.txt"
 #define StudentsCoursesFile "StudentsCourses.txt"
 
-#define AiFolderPath "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/"
-#define SaekoFolderPath "/Users/fukuisaeko/GitHub/401-Project1/textfiles/"
+#define FolderPath "/Users/Shared/textfiles/"
+
 
 struct Account
 {
@@ -155,8 +155,7 @@ int judgeLoginUser(char* userName, char* password)
     int result = -1;
     
     char* accountsFileName = AccountsFile;
-    char* accountsFileAddress = SaekoFolderPath AccountsFile;
-    //    char* accountsFileAddress = SaekoFolderPath AccountsFile;
+    char* accountsFileAddress = FolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
@@ -211,19 +210,16 @@ int showMenu(void)
     
     int numberOfCourses=0;
     char* CoursesFileName = CoursesFile;
-    char* coursesfileAddress = SaekoFolderPath CoursesFile;
-    //    char* coursesfileAddress = SaekoFolderPath CoursesFile;
+    char* coursesfileAddress = FolderPath CoursesFile;
     listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
     
     char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = SaekoFolderPath StudentsFile;
-    //    char* studentsfileAddress = SaekoFolderPath StudentsFile;
+    char* studentsfileAddress = FolderPath StudentsFile;
     int numberOfStudents = 0;
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
     
     char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
-    //    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
+    char* studentsCoursesFileAddress = FolderPath StudentsCoursesFile;
     int numberOfStudentsCourses = 0;
     
     listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
@@ -445,8 +441,7 @@ void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
 void listAllStudents(int numberOfStudents)
 {
     char* accountsFileName = AccountsFile;
-    // char* accountsFileAddress = AiFolderPath AccountsFile;
-    char* accountsFileAddress = SaekoFolderPath AccountsFile;
+     char* accountsFileAddress = FolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
@@ -915,8 +910,7 @@ struct Student getMyStudentDataByID(char* studentID)
 {
     //Extracting students information from the file
     char* studentsFileName = StudentsFile;
-    //char* studentsfileAddress = AiFolderPath StudentsFile;
-    char* studentsfileAddress = SaekoFolderPath StudentsFile;
+    char* studentsfileAddress = FolderPath StudentsFile;
     int numberOfStudents = 0;
     
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
