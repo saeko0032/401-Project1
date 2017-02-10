@@ -257,6 +257,8 @@ int showMenu(void)
             return 1;
         case 9:
             return 0;
+        default:
+            return 1;
     }
     return 0;
 }
