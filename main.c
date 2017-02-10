@@ -339,7 +339,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
             if (strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
             {
                 printf("%d) ", counter);
-                printf("%s: %s", listOfCourses[j].courseID, listOfCourses[j].name);
+                printf("%s: %s:", listOfCourses[j].courseID, listOfCourses[j].name);
                 if (strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
                 {
                     printf(" %d\n", listOfStudentCourses[j].mark);
@@ -414,7 +414,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
         }
     }
     
-    printf("Your GPA is %.2f and therefore your rank is %d.", myGPA, myRank);
+    printf("Your GPA is %.2f and therefore your rank is %d.\n", myGPA, myRank);
     fflush(stdout);
     sleep(4);
 }
