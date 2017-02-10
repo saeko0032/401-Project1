@@ -1,22 +1,18 @@
-<<<<<<< HEAD
-studentID:”7813007”
-courseID:”MADP101””
-mark:”85”
-
-studentID:”7813007”
-courseID:”MADP301”
-mark:”60”
-=======
 1studentID:"7813007"
 2courseID:"MADP101"
 3mark:"85"
 1studentID:"7813007"
-2courseID:"MADP202”
+2courseID:"MADP202"
 3mark:"40"
 1studentID:"7813007"
 2courseID:"MADP301"
 3mark:"60"
 1studentID:"7813007"
-2courseID:"MADP402”
+2courseID:"MADP402"
 3mark:"70"
->>>>>>> origin/master
+1studentID:"7813008"
+2courseID:"MADP301"
+3mark:"60"
+1studentID:"7813008"
+2courseID:"MADP402"
+3mark:"70"

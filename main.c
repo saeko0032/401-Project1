@@ -17,7 +17,7 @@
 #define StudentsCoursesFile "StudentsCourses.txt"
 
 #define AiFolderPath "/Users/yamamotoai/Documents/C/Project1/Alisample/Alisample/"
-#define SaekoFolderPath "/Users/fukuisaeko/GitHub/401-Project/textfiles/"
+#define SaekoFolderPath "/Users/fukuisaeko/GitHub/401-Project1/textfiles/"
 
 struct Account
 {
@@ -107,18 +107,18 @@ int main(int argc, const char * argv[]) {
     
     int numberOfCourses=0;
     char* CoursesFileName = CoursesFile;
-    char* coursesfileAddress = AiFolderPath CoursesFile;
+    char* coursesfileAddress = SaekoFolderPath CoursesFile;
     //    char* coursesfileAddress = SaekoFolderPath CoursesFile;
     listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
     
     char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = AiFolderPath StudentsFile;
+    char* studentsfileAddress = SaekoFolderPath StudentsFile;
     //    char* studentsfileAddress = SaekoFolderPath StudentsFile;
     int numberOfStudents = 0;
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
     
     char* studentsCoursesFileName = StudentsCoursesFile;
-    char* studentsCoursesFileAddress = AiFolderPath StudentsCoursesFile;
+    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
     //    char* studentsCoursesFileAddress = SaekoFolderPath StudentsCoursesFile;
     int numberOfStudentsCourses = 0;
     
@@ -209,7 +209,7 @@ int judgeLoginUser(char* userName, char* password)
     int result = -1;
     
     char* accountsFileName = AccountsFile;
-    char* accountsFileAddress = AiFolderPath AccountsFile;
+    char* accountsFileAddress = SaekoFolderPath AccountsFile;
     //    char* accountsFileAddress = SaekoFolderPath AccountsFile;
     int numberOfAccounts = 0;
     
@@ -391,11 +391,41 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
     strcmp(myself.gender, "male") == 0 ? printf("Mr.") : printf("Ms.");
     printf("%s,\n", myself.name);
     
-    float GPA = getMyGPA(myself, numberOfStudentsCourses);
+    float myGPA = getMyGPA(myself, numberOfStudentsCourses);
     
-    printf("Your GPA is %2.f and therefore your rank is",GPA);
-    // think about that
+    float listOfGPA[numberOfStudentsCourses];
+    char* userList[numberOfStudentsCourses];
+    userList[0] = myself.studentID;
+    listOfGPA[0] = myGPA;
+    int counter = 1;
+    for(int i = 0; i < numberOfStudentsCourses; i++)
+    {
+        if(strcmp(myself.studentID,listOfStudentCourses[i].studentID) != 0 && listOfStudentCourses[i].studentID != NULL)
+        {
+            struct Student tempStudent = getMyStudentDataByID(listOfStudentCourses[i].studentID);
+            for(int i = counter-1; i < counter; i++)
+            {
+                if(strncmp(userList[i],tempStudent.studentID,7) != 0)
+                {
+                    userList[counter] = tempStudent.studentID;
+                    float tempGPA = getMyGPA(tempStudent, numberOfStudentsCourses);
+                    listOfGPA[counter] = tempGPA;
+                    counter++;
+                }
+            }
+            
+        }
+    }
+    int myRank = 1;
+    for(int j = 0; j < counter; j++)
+    {
+        if(myGPA<listOfGPA[j])
+        {
+            myRank++;
+        }
+    }
     
+    printf("Your GPA is %.2f and therefore your rank is %d",myGPA, myRank);
     fflush(stdout);
     sleep(4);
 }
@@ -421,8 +451,8 @@ void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
 void listAllStudents(int numberOfStudents)
 {
     char* accountsFileName = AccountsFile;
-    char* accountsFileAddress = AiFolderPath AccountsFile;
-    //    char* accountsFileAddress = SaekoFolderPath AccountsFile;
+    // char* accountsFileAddress = AiFolderPath AccountsFile;
+    char* accountsFileAddress = SaekoFolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
@@ -888,13 +918,13 @@ struct Student getMyStudentDataByID(char* studentID)
 {
     //Extracting students information from the file
     char* studentsFileName = StudentsFile;
-    char* studentsfileAddress = AiFolderPath StudentsFile;
-//    char* studentsfileAddress = SaekoFolderPath StudentsFile;
+    //char* studentsfileAddress = AiFolderPath StudentsFile;
+    char* studentsfileAddress = SaekoFolderPath StudentsFile;
     int numberOfStudents = 0;
     
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
     struct Student myInfo ={NULL,NULL,NULL,0,NULL,0,NULL,0};
-    for(int i=0; i<10; i++)
+    for(int i=0; i<numberOfStudents; i++)
     {
         //testing
         for(int i=0; i<numberOfStudents; i++)
