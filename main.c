@@ -395,25 +395,30 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
     
     float listOfGPA[numberOfStudentsCourses];
     char* userList[numberOfStudentsCourses];
+    userList[0] = myself.studentID;
     listOfGPA[0] = myGPA;
     int counter = 1;
     for(int i = 0; i < numberOfStudentsCourses; i++)
     {
         if(strcmp(myself.studentID,listOfStudentCourses[i].studentID) != 0 && listOfStudentCourses[i].studentID != NULL)
         {
-            // 自分以外のユーザが存在するとき
             struct Student tempStudent = getMyStudentDataByID(listOfStudentCourses[i].studentID);
-            // すでに登録されていたら計算しない処理を入れる
-            float tempGPA = getMyGPA(tempStudent, numberOfStudentsCourses);
-            listOfGPA[counter] = tempGPA;
-            counter++;
+            for(int i = counter-1; i < counter; i++)
+            {
+                if(strncmp(userList[i],tempStudent.studentID,7) != 0)
+                {
+                    userList[counter] = tempStudent.studentID;
+                    float tempGPA = getMyGPA(tempStudent, numberOfStudentsCourses);
+                    listOfGPA[counter] = tempGPA;
+                    counter++;
+                }
+            }
             
         }
     }
     int myRank = 1;
     for(int j = 0; j < counter; j++)
     {
-        //
         if(myGPA<listOfGPA[j])
         {
             myRank++;
