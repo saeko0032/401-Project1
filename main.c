@@ -182,11 +182,11 @@ int showMenu(void)
     printf("Select from the options:\n");
     printf("************************************************************\n");
     printf("\n");
-    printf("—-[1] Print myenrolment certificate\n");
+    printf("—-[1] Print my enrolment certificate\n");
     printf("—-[2] Print my courses\n");
     printf("—-[3] Print my transcript\n");
     printf("—-[4] Print my GPA\n");
-    printf("—-[5] Print my ranking among all studentsin the college\n");
+    printf("—-[5] Print my ranking among all students in the college\n");
     printf("—-[6] List all available courses\n");
     printf("—-[7] List all students\n");
     printf("-—[8] Logout\n");
@@ -203,9 +203,9 @@ int showMenu(void)
     }
     int intNumber = atoi(inputNumber);
     
-    if(intNumber<0 || 10 <= intNumber)
+    if(intNumber < 0 || 10 <= intNumber)
     {
-        printf("You Entered wrong number\nbye\n");
+        printf("You entered wrong number\nbye\n");
     }
     
     int numberOfCourses=0;
@@ -298,7 +298,6 @@ void printMyCertificate(struct Student myself)
  */
 void printMyCourses(struct Student myself,int numberOfCourses)
 {
-    printf("*********************************************\n");
     if(strcmp(myself.gender, "male") == 0)
     {
         printf("Hi Mr. %s,\n",myself.name);
@@ -308,15 +307,14 @@ void printMyCourses(struct Student myself,int numberOfCourses)
         printf("Hi Ms. %s,\n",myself.name);
     }
     printf("You have taken the following courses:\n");
-    for(int i=0; i< numberOfCourses; i++)
+    for(int i = 0; i < numberOfCourses; i++)
     {
-        for(int j=i; j<myself.numberOfCourses; j++)
+        for(int j = i; j < myself.numberOfCourses; j++)
         {
             if(strcmp(listOfCourses[i].courseID, myself.courses[j]) == 0)
-                printf("%d)%s : %s\n",i+1,myself.courses[j],listOfCourses[i].name);
+                printf("%d) %s: %s\n",i+1,myself.courses[j],listOfCourses[i].name);
         }
     }
-    printf("*********************************************\n");
     sleep(4);
 }
 
@@ -334,7 +332,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
     int counter = 1;
     for(int i = 0; i < myself.numberOfCourses; i++)
     {
-        for(int j=0; j < numberOfStudentsCourses; j++)
+        for(int j = 0; j < numberOfStudentsCourses; j++)
         {
             
             if(strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
@@ -363,14 +361,12 @@ void printMyGPA(struct Student myself, int numberOfStudentsCourses)
 {
     float GPA = getMyGPA(myself, numberOfStudentsCourses);
     
-    printf("*********************************************\n");
     if(strcmp(myself.gender, "male") == 0){
         printf("Hi Mr. %s,\n",myself.name);
     }else{
         printf("Hi Ms. %s,\n",myself.name);
     }
     printf("Your GPA is %.2f\n",GPA);
-    printf("*********************************************\n");
     sleep(4);
 }
 
@@ -427,13 +423,11 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
  */
 void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
 {
-    printf("*********************************************\n");
-    printf("The following courses are offered in CICCC\n");
+    printf("The following courses are offered in CICCC:\n");
     for(int i = 0; i < numberOfCourses; i++)
     {
-        printf("%d) %s : %s\n",i+1,listOfCourses[i].courseID,listOfCourses[i].name);
+        printf("%d) %s: %s\n",i+1,listOfCourses[i].courseID,listOfCourses[i].name);
     }
-    printf("*********************************************\n");
     sleep(4);
 }
 
@@ -443,7 +437,7 @@ void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
 void listAllStudents(int numberOfStudents)
 {
     char* accountsFileName = AccountsFile;
-     char* accountsFileAddress = FolderPath AccountsFile;
+    char* accountsFileAddress = FolderPath AccountsFile;
     int numberOfAccounts = 0;
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
