@@ -457,7 +457,7 @@ void listAllStudents(int numberOfStudents)
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
     
-    printf("There are %d students in CICCC as following:",numberOfStudents);
+    printf("There are %d students in CICCC as following:\n",numberOfStudents);
     int counter = 1;
     for(int i = 0; i< numberOfAccounts; i++)
     {
