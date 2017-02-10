@@ -279,16 +279,16 @@ void printMyCertificate(struct Student myself)
     strcmp(myself.gender, "male") == 0 ? printf("He") : printf("She");
     printf(" was admitted to our college in %d ",myself.admission_year);
     
-    printf("and has taken %d",myself.numberOfCourses);
+    printf("and has taken %d ",myself.numberOfCourses);
     myself.numberOfCourses == 1 ? puts("course.") : puts("courses.");
     
     printf("Currently ");
-    strcmp(myself.gender, "male") == 0 ? printf("He") : printf("She");
+    strcmp(myself.gender, "male") == 0 ? printf("He ") : printf("She ");
     printf("resides at %s.",myself.address);
     printf("\n\n");
     printf("If you have any question, please don't hesitate to contact us.\n");
     printf("Thanks,\n");
-    printf("William\n");
+    printf("William,\n");
     fflush(stdout);
     sleep(4);
 }
@@ -298,7 +298,6 @@ void printMyCertificate(struct Student myself)
  */
 void printMyCourses(struct Student myself,int numberOfCourses)
 {
-    printf("*********************************************\n");
     if(strcmp(myself.gender, "male") == 0)
     {
         printf("Hi Mr. %s,\n",myself.name);
@@ -313,10 +312,9 @@ void printMyCourses(struct Student myself,int numberOfCourses)
         for(int j=i; j<myself.numberOfCourses; j++)
         {
             if(strcmp(listOfCourses[i].courseID, myself.courses[j]) == 0)
-                printf("%d)%s : %s\n",i+1,myself.courses[j],listOfCourses[i].name);
+                printf("%d) %s: %s\n",i+1,myself.courses[j],listOfCourses[i].name);
         }
     }
-    printf("*********************************************\n");
     sleep(4);
 }
 
@@ -326,7 +324,7 @@ void printMyCourses(struct Student myself,int numberOfCourses)
 void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
 {
     printf("Hi ");
-    strcmp(myself.gender, "male") == 0 ? printf("Mr.") : printf("Ms.");
+    strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
     printf("%s\n", myself.name);
     
     printf("Here is your transcript:\n");
@@ -340,7 +338,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
             if(strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
             {
                 printf("%d) ",counter);
-                printf("%s %s\n",listOfCourses[j].courseID, listOfCourses[j].name);
+                printf("%s: %s",listOfCourses[j].courseID, listOfCourses[j].name);
                 if(strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
                 {
                     printf(" %d\n",listOfStudentCourses[j].mark);
