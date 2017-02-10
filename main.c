@@ -229,32 +229,34 @@ int showMenu(void)
     switch (intNumber) {
         case 1:
             printMyCertificate(myself);
-            return 1;
+            return EXIT_FAILURE;
         case 2:
             printMyCourses(myself,numberOfCourses);
-            return 1;
+            return EXIT_FAILURE;
         case 3:
             printMyTranscript(myself, numberOfStudentsCourses);
-            return 1;
+            return EXIT_FAILURE;
         case 4:
             printMyGPA(myself, numberOfStudentsCourses);
-            return 1;
+            return EXIT_FAILURE;
         case 5:
             printMyRanking(myself, numberOfStudentsCourses);
-            return 1;
+            return EXIT_FAILURE;
         case 6:
             listAllCourses(listOfCourses,numberOfCourses);
-            return 1;
+            return EXIT_FAILURE;
         case 7:
             listAllStudents(numberOfStudents);
-            return 1;
+            return EXIT_FAILURE;
         case 8:
             logoutUser(myself);
-            return 1;
+            return EXIT_FAILURE;
         case 9:
-            return 0;
+            return EXIT_SUCCESS;
+        default:
+            return EXIT_FAILURE;
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /**
