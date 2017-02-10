@@ -75,11 +75,11 @@ float getMyGPA(struct Student myself, int numberOfStudentsCourses);
 
 // menu method
 void printMyCertificate(struct Student);
-void printMyCourses(struct Student myself,int numberOfCourses);
+void printMyCourses(struct Student myself, int numberOfCourses);
 void printMyTranscript(struct Student, int numberOfStudentsCourses);
 void printMyGPA(struct Student myself, int numberOfStudentsCourses);
 void printMyRanking(struct Student, int numberOfStudentsCourses);
-void listAllCourses(struct Course* listOfCourses,int numberOfCourses);
+void listAllCourses(struct Course* listOfCourses, int numberOfCourses);
 void listAllStudents(int numberOfStudents);
 void logoutUser(struct Student myself);
 
@@ -105,7 +105,6 @@ struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* f
 int main(int argc, const char * argv[]) {
     loginUser();
     while(showMenu());
-    
     return 0;
 }
 
@@ -162,16 +161,16 @@ int judgeLoginUser(char* userName, char* password)
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
     
-    //testing
     for(int i=0; i<numberOfAccounts; i++)
     {
+        // to check input UserName and studentID(accounts.txt)
         if(strcmp(userName,listOfAccounts[i].studentID) == 0)
         {
+            // to check password
             if(strcmp(password,listOfAccounts[i].password) == 0)
             {
                 myStudentID = listOfAccounts[i].studentID;
                 result = EXIT_SUCCESS;
-                
             }
         }
     }
@@ -197,31 +196,31 @@ int showMenu(void)
     printf("\n");
     printf("Enter the number corresponding to each item to proceed:\n");
     
-    char inputNumber[2];
-    fgets(inputNumber, 2, stdin);
-    if(inputNumber[0] == '\n')
+    char inputNumberStr[2];
+    fgets(inputNumberStr, 2, stdin);
+    if (inputNumberStr[0] == '\n')
     {
-        fgets(inputNumber, 2, stdin);
+        fgets(inputNumberStr, 2, stdin);
     }
-    int intNumber = atoi(inputNumber);
+    int intNumber = atoi(inputNumberStr);
     
-    if(intNumber < 0 || 10 <= intNumber)
+    if (intNumber < 0 || 10 <= intNumber)
     {
         printf("You entered wrong number\nbye\n");
     }
     
-    int numberOfCourses=0;
-    char* CoursesFileName = CoursesFile;
     char* coursesfileAddress = FolderPath CoursesFile;
+    char* CoursesFileName = CoursesFile;
+    int numberOfCourses = 0;
     listOfCourses = getListOfCourseNameFromFile(coursesfileAddress, CoursesFileName, &numberOfCourses);
     
-    char* studentsFileName = StudentsFile;
     char* studentsfileAddress = FolderPath StudentsFile;
+    char* studentsFileName = StudentsFile;
     int numberOfStudents = 0;
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
     
-    char* studentsCoursesFileName = StudentsCoursesFile;
     char* studentsCoursesFileAddress = FolderPath StudentsCoursesFile;
+    char* studentsCoursesFileName = StudentsCoursesFile;
     int numberOfStudentsCourses = 0;
     
     listOfStudentCourses = getListOfStudentCourseFromFile(studentsCoursesFileAddress, studentsCoursesFileName, &numberOfStudentsCourses);
@@ -275,18 +274,18 @@ void printMyCertificate(struct Student myself)
     strcmp(myself.gender, "Male") == 0 ? printf("Mr.") : printf("Ms.");
     printf("%s", myself.name);
     
-    printf(" with student id %s",myself.studentID);
-    printf(" is a student at grade %d at CICCC. ",myself.grade);
+    printf(" with student id %s", myself.studentID);
+    printf(" is a student at grade %d at CICCC. ", myself.grade);
     
     strcmp(myself.gender, "male") == 0 ? printf("He") : printf("She");
-    printf(" was admitted to our college in %d ",myself.admission_year);
+    printf(" was admitted to our college in %d ", myself.admission_year);
     
-    printf("and has taken %d ",myself.numberOfCourses);
+    printf("and has taken %d ", myself.numberOfCourses);
     myself.numberOfCourses == 1 ? puts("course.") : puts("courses.");
     
     printf("Currently ");
     strcmp(myself.gender, "male") == 0 ? printf("He ") : printf("She ");
-    printf("resides at %s.",myself.address);
+    printf("resides at %s.", myself.address);
     printf("\n\n");
     printf("If you have any question, please don't hesitate to contact us.\n");
     printf("Thanks,\n");
@@ -300,21 +299,21 @@ void printMyCertificate(struct Student myself)
  */
 void printMyCourses(struct Student myself,int numberOfCourses)
 {
-    if(strcmp(myself.gender, "male") == 0)
+    if (strcmp(myself.gender, "male") == 0)
     {
-        printf("Hi Mr. %s,\n",myself.name);
+        printf("Hi Mr. %s,\n", myself.name);
     }
     else
     {
-        printf("Hi Ms. %s,\n",myself.name);
+        printf("Hi Ms. %s,\n", myself.name);
     }
     printf("You have taken the following courses:\n");
-    for(int i = 0; i < numberOfCourses; i++)
+    for (int i = 0; i < numberOfCourses; i++)
     {
-        for(int j = i; j < myself.numberOfCourses; j++)
+        for (int j = i; j < myself.numberOfCourses; j++)
         {
-            if(strcmp(listOfCourses[i].courseID, myself.courses[j]) == 0)
-                printf("%d) %s: %s\n",i+1,myself.courses[j],listOfCourses[i].name);
+            if (strcmp(listOfCourses[i].courseID, myself.courses[j]) == 0)
+                printf("%d) %s: %s\n",i+1, myself.courses[j], listOfCourses[i].name);
         }
     }
     sleep(4);
@@ -327,23 +326,23 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
 {
     printf("Hi ");
     strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
-    printf("%s,\n", myself.name);
+    printf("%s\n", myself.name);
     
     printf("Here is your transcript:\n");
     
     int counter = 1;
-    for(int i = 0; i < myself.numberOfCourses; i++)
+    for (int i = 0; i < myself.numberOfCourses; i++)
     {
-        for(int j = 0; j < numberOfStudentsCourses; j++)
+        for (int j = 0; j < numberOfStudentsCourses; j++)
         {
             
-            if(strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
+            if (strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
             {
-                printf("%d) ",counter);
-                printf("%s: %s",listOfCourses[j].courseID, listOfCourses[j].name);
-                if(strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
+                printf("%d) ", counter);
+                printf("%s: %s", listOfCourses[j].courseID, listOfCourses[j].name);
+                if (strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
                 {
-                    printf(" %d\n",listOfStudentCourses[j].mark);
+                    printf(" %d\n", listOfStudentCourses[j].mark);
                 }
                 counter++;
                 break;
@@ -364,11 +363,11 @@ void printMyGPA(struct Student myself, int numberOfStudentsCourses)
     float GPA = getMyGPA(myself, numberOfStudentsCourses);
     
     if(strcmp(myself.gender, "male") == 0){
-        printf("Hi Mr. %s,\n",myself.name);
+        printf("Hi Mr. %s,\n", myself.name);
     }else{
-        printf("Hi Ms. %s,\n",myself.name);
+        printf("Hi Ms. %s,\n", myself.name);
     }
-    printf("Your GPA is %.2f\n",GPA);
+    printf("Your GPA is %.2f\n", GPA);
     sleep(4);
 }
 
@@ -390,7 +389,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
     int counter = 1;
     for(int i = 0; i < numberOfStudentsCourses; i++)
     {
-        if(strcmp(myself.studentID,listOfStudentCourses[i].studentID) != 0 && listOfStudentCourses[i].studentID != NULL)
+        if(strcmp(myself.studentID, listOfStudentCourses[i].studentID) != 0 && listOfStudentCourses[i].studentID != NULL)
         {
             struct Student tempStudent = getMyStudentDataByID(listOfStudentCourses[i].studentID);
             for(int i = counter-1; i < counter; i++)
@@ -415,7 +414,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
         }
     }
     
-    printf("Your GPA is %.2f and therefore your rank is %d.",myGPA, myRank);
+    printf("Your GPA is %.2f and therefore your rank is %d.", myGPA, myRank);
     fflush(stdout);
     sleep(4);
 }
@@ -428,7 +427,7 @@ void listAllCourses(struct Course* listOfCourses, int numberOfCourses)
     printf("The following courses are offered in CICCC:\n");
     for(int i = 0; i < numberOfCourses; i++)
     {
-        printf("%d) %s: %s\n",i+1,listOfCourses[i].courseID,listOfCourses[i].name);
+        printf("%d) %s: %s\n", i+1, listOfCourses[i].courseID, listOfCourses[i].name);
     }
     sleep(4);
 }
@@ -444,7 +443,7 @@ void listAllStudents(int numberOfStudents)
     
     listOfAccounts = getListofAccountFromFile(accountsFileAddress, accountsFileName, &numberOfAccounts);
     
-    printf("There are %d students in CICCC as following:\n",numberOfStudents);
+    printf("There are %d students in CICCC as following:\n", numberOfStudents);
     int counter = 1;
     for(int i = 0; i< numberOfAccounts; i++)
     {
@@ -473,11 +472,10 @@ void logoutUser(struct Student myself)
     myself.numberOfCourses = 0;
     
     myStudentID = NULL;
-    sleep(4);
+    sleep(2);
     
     loginUser();
     showMenu();
-    
 }
 
 float getMyGPA(struct Student myself, int numberOfStudentsCourses)
@@ -486,8 +484,8 @@ float getMyGPA(struct Student myself, int numberOfStudentsCourses)
     int count = 0;
     float GPA = 0;
     
-    for(int i = 0; i < numberOfStudentsCourses; i++){
-        if(strcmp(myself.studentID, listOfStudentCourses[i].studentID) == 0)
+    for (int i = 0; i < numberOfStudentsCourses; i++){
+        if (strcmp(myself.studentID, listOfStudentCourses[i].studentID) == 0)
         {
             mark = mark + listOfStudentCourses[i].mark;
             count++;
@@ -501,70 +499,67 @@ float getMyGPA(struct Student myself, int numberOfStudentsCourses)
 int getTheStartIndex(char* filename, char firstChar)
 {
     
-    if(strcmp(filename, AccountsFile)==0 && firstChar=='1')  //1User:”
+    if (strcmp(filename, AccountsFile)==0 && firstChar=='1')  //1User:”
     {
         return 7;
     }
-    else if(strcmp(filename, AccountsFile)==0 && firstChar=='2') //2Pass:”
+    else if (strcmp(filename, AccountsFile)==0 && firstChar=='2') //2Pass:”
     {
         return 7;
     }
-    if(strcmp(filename, StudentsFile)==0 && firstChar=='1')  //1studentID:”
+    if (strcmp(filename, StudentsFile)==0 && firstChar=='1')  //1studentID:”
     {
         return 12;
     }
-    else if(strcmp(filename, StudentsFile)==0 && firstChar=='2') //2name:”
+    else if (strcmp(filename, StudentsFile)==0 && firstChar=='2') //2name:”
     {
         return 7;
     }
-    else if(strcmp(filename, StudentsFile)==0 && firstChar=='3') //3gender:”
+    else if (strcmp(filename, StudentsFile)==0 && firstChar=='3') //3gender:”
     {
         return 9;
     }
-    else if(strcmp(filename, StudentsFile)==0 && firstChar=='4') //4grade:”
+    else if (strcmp(filename, StudentsFile)==0 && firstChar=='4') //4grade:”
     {
         return 8;
     }
-    else if(strcmp(filename, StudentsFile)==0 && firstChar=='5') //5address:“
+    else if (strcmp(filename, StudentsFile)==0 && firstChar=='5') //5address:“
     {
         return 10;
     }
-    else if(strcmp(filename, StudentsFile)==0 && firstChar=='6') //6admission_year:”
+    else if (strcmp(filename, StudentsFile)==0 && firstChar=='6') //6admission_year:”
     {
         return 17;
     }
-    else if(strcmp(filename, StudentsFile)==0 && firstChar=='7') //7courses:”
+    else if (strcmp(filename, StudentsFile)==0 && firstChar=='7') //7courses:”
     {
         return 10;
     }
     
-    else if(strcmp(filename, CoursesFile)==0 && firstChar=='1') //courseID
+    else if (strcmp(filename, CoursesFile)==0 && firstChar=='1') //courseID
     {
         return 10;
     }
-    else if(strcmp(filename, CoursesFile)==0 && firstChar=='2') //name
+    else if (strcmp(filename, CoursesFile)==0 && firstChar=='2') //name
     {
         return 6;
     }
-    else if(strcmp(filename, StudentsCoursesFile)==0 && firstChar=='1') //1studentID:"
+    else if (strcmp(filename, StudentsCoursesFile)==0 && firstChar=='1') //1studentID:"
     {
         return 12;
     }
-    else if(strcmp(filename, StudentsCoursesFile)==0 && firstChar=='2') //2courseID:"
+    else if (strcmp(filename, StudentsCoursesFile)==0 && firstChar=='2') //2courseID:"
     {
         return 11;
     }
-    else if(strcmp(filename, StudentsCoursesFile)==0 && firstChar=='3') //3mark:"
+    else if (strcmp(filename, StudentsCoursesFile)==0 && firstChar=='3') //3mark:"
     {
         return 7;
     }
-    
     else
     {
         return 0;
     }
-    
-    
 }
 
 int convertToNumber(char * string)
@@ -575,7 +570,6 @@ int convertToNumber(char * string)
 
 int strLength(char* line)
 {
-    
     char c = '\n';
     int index = 0;
     
@@ -612,12 +606,12 @@ char* substring(char* line, int startIndex, int endIndex)
     
     substring = (char*) malloc((len+1)*sizeof(char));
     
-    for(int i=0; i<=len; i++)
+    for(int i = 0; i <= len; i++)
     {
         substring[i] = '\0';
     }
     
-    for(int i=0; i<len; i++)
+    for(int i = 0; i < len; i++)
     {
         substring[i] = *(line+startIndex+i);
         
@@ -670,7 +664,7 @@ char** splitString(char* a_str, const char a_delim, int* numberOfComponents)
     
     
     char* components[count];
-    for(int i=0; i<count; i++)
+    for (int i = 0; i < count; i++)
     {
         components[i] = '\0';
     }
@@ -704,7 +698,7 @@ char** readFile(char* fileAddress, int* numberOfLines)
     
     /* Allocate lines of text */
     char **words = (char **)malloc(sizeof(char*)*lines_allocated);
-    if (words==NULL)
+    if (words == NULL)
     {
         fprintf(stderr,"Out of memory (1).\n");
         exit(1);
@@ -718,7 +712,7 @@ char** readFile(char* fileAddress, int* numberOfLines)
     }
     
     int i;
-    for (i=0;1;i++)
+    for (i = 0; 1; i++)
     {
         int j;
         
@@ -739,45 +733,41 @@ char** readFile(char* fileAddress, int* numberOfLines)
         }
         /* Allocate space for the next line */
         words[i] = malloc(max_line_len);
-        if (words[i]==NULL)
+        if (words[i] == NULL)
         {
             fprintf(stderr,"Out of memory (3).\n");
             exit(4);
         }
-        if (fgets(words[i],max_line_len-1,fp)==NULL)
+        if (fgets(words[i],max_line_len-1,fp) == NULL)
             break;
         
         /* Get rid of CR or LF at end of line */
-        for (j=(int)(strlen(words[i]))-1;j>=0 && (words[i][j]=='\n' || words[i][j]=='\r');j--)
+        for (j = (int)(strlen(words[i]))-1; j >= 0 && (words[i][j]=='\n' || words[i][j]=='\r');j--)
             ;
         words[i][j+1]='\0';
     }
     /* Close file */
     fclose(fp);
-    
-    
     (*numberOfLines) = i;
-    
-    
     return words;
 }
 
 
 int numberOfItemsPerRecordInFile(char* fileName)
 {
-    if(strcmp(fileName, CoursesFile)==0)
+    if (strcmp(fileName, CoursesFile) == 0)
     {
         return 2;
     }
-    else if(strcmp(fileName, AccountsFile)==0)
+    else if (strcmp(fileName, AccountsFile) == 0)
     {
         return 2;
     }
-    else if(strcmp(fileName, StudentsFile)==0)
+    else if (strcmp(fileName, StudentsFile) == 0)
     {
         return 7;
     }
-    else if(strcmp(fileName, StudentsCoursesFile)==0)
+    else if (strcmp(fileName, StudentsCoursesFile) == 0)
     {
         return 3;
     }
@@ -801,13 +791,11 @@ struct Student createAStudent(char* studentID, char* name, char* gender, int gra
     (*student).courses = courses;
     (*student).numberOfCourses = numberOfCourses;
     
-    
     return *student;
 }
 
 struct Student* getListOfStudentFromFile(char* fileAddress, char* fileName, int* numberOfStudents)
 {
-    
     int numberOfStudentsReadFromFileSoFar = 0;
     
     int numberOfLinesInTheFile = 0;
@@ -817,11 +805,9 @@ struct Student* getListOfStudentFromFile(char* fileAddress, char* fileName, int*
     
     int numberOfRecords = numberOfLinesInTheFile / numberOfLinesPerRecord;
     
-    
     struct Student* listOfStudents = (struct Student*) malloc(numberOfRecords*sizeof(struct Student));
     
-    
-    for(int k=0; k<numberOfRecords; k++)
+    for(int k = 0; k < numberOfRecords; k++)
     {
         char* studentID = NULL;
         char* name = NULL;
@@ -834,11 +820,11 @@ struct Student* getListOfStudentFromFile(char* fileAddress, char* fileName, int*
         int numberOfCourses = 0;
         
         
-        for(int i=0; i<numberOfLinesPerRecord; i++)
+        for (int i = 0; i < numberOfLinesPerRecord; i++)
         {
             int indexOfLine = k*numberOfLinesPerRecord+i;
             
-            if(lines[indexOfLine]!=NULL)
+            if (lines[indexOfLine] != NULL)
             {
                 //printf("\n%s\n", lines[indexOfLine]);
                 char firstCharacter = firstChar(lines[indexOfLine]);
@@ -848,55 +834,50 @@ struct Student* getListOfStudentFromFile(char* fileAddress, char* fileName, int*
                 int startIndex = getTheStartIndex(fileName, firstChar(lines[indexOfLine]));
                 
                 
-                if(firstCharacter=='1')
+                if (firstCharacter == '1')
                 {
                     studentID = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='2')
+                else if (firstCharacter == '2')
                 {
                     name = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='3')
+                else if (firstCharacter == '3')
                 {
                     gender = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='4')
+                else if (firstCharacter == '4')
                 {
                     char* gradeStr = substring(lines[indexOfLine], startIndex, lineLength-2);
                     
                     grade = convertToNumber(gradeStr);
                 }
-                else if(firstCharacter=='5')
+                else if (firstCharacter == '5')
                 {
                     address = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='6')
+                else if (firstCharacter == '6')
                 {
                     char* admissionYearStr = substring(lines[indexOfLine], startIndex, lineLength-2);
                     admission_year = convertToNumber(admissionYearStr);
                 }
-                else if(firstCharacter=='7')
+                else if (firstCharacter == '7')
                 {
                     int numberOfComponents = 0;
                     char* coursesStr = substring(lines[indexOfLine], startIndex, lineLength-2);
                     courses = splitString(coursesStr, ',', &numberOfComponents);
-                    
-                    
                     
                     numberOfCourses = numberOfComponents;
                     
                 }
             }//end of if
             
-            
         }//end of second for
         
-        
-        struct Student student= createAStudent(studentID, name, gender, grade, address, admission_year, courses, numberOfCourses);
+        struct Student student = createAStudent(studentID, name, gender, grade, address, admission_year, courses, numberOfCourses);
         listOfStudents[numberOfStudentsReadFromFileSoFar] = student;
         
         numberOfStudentsReadFromFileSoFar++;
-        
         
     }//end of first for
     
@@ -906,19 +887,17 @@ struct Student* getListOfStudentFromFile(char* fileAddress, char* fileName, int*
 
 struct Student getMyStudentDataByID(char* studentID)
 {
-    //Extracting students information from the file
-    char* studentsFileName = StudentsFile;
     char* studentsfileAddress = FolderPath StudentsFile;
+    char* studentsFileName = StudentsFile;
     int numberOfStudents = 0;
     
     listOfStudents = getListOfStudentFromFile(studentsfileAddress, studentsFileName, &numberOfStudents);
-    struct Student myInfo ={NULL,NULL,NULL,0,NULL,0,NULL,0};
-    for(int i=0; i<numberOfStudents; i++)
+    struct Student myInfo = { NULL, NULL, NULL, 0, NULL, 0, NULL, 0 };
+    for (int i = 0; i < numberOfStudents; i++)
     {
-        //testing
-        for(int i=0; i<numberOfStudents; i++)
+        for (int i = 0; i < numberOfStudents; i++)
         {
-            if(strcmp(studentID, listOfStudents[i].studentID) == 0)
+            if (strcmp(studentID, listOfStudents[i].studentID) == 0)
             {
                 myInfo = createAStudent(listOfStudents[i].studentID, listOfStudents[i].name, listOfStudents[i].gender, listOfStudents[i].grade, listOfStudents[i].address, listOfStudents[i].admission_year, listOfStudents[i].courses, listOfStudents[i].numberOfCourses);
             }
@@ -950,20 +929,18 @@ struct Account* getListofAccountFromFile(char* fileAddress, char* fileName, int*
     
     int numberOfRecords = numberOfLinesInTheFile / numberOfLinesPerRecord;
     
-    
     struct Account* listOfAccounts = (struct Account*) malloc(numberOfRecords*sizeof(struct Account));
     
-    
-    for(int k=0; k<numberOfRecords; k++)
+    for (int k = 0; k < numberOfRecords; k++)
     {
         char* studentId = NULL;
         char* password = NULL;
         
-        for(int i=0; i<numberOfLinesPerRecord; i++)
+        for (int i = 0; i < numberOfLinesPerRecord; i++)
         {
             int indexOfLine = k*numberOfLinesPerRecord+i;
             
-            if(lines[indexOfLine]!=NULL)
+            if (lines[indexOfLine]!=NULL)
             {
                 char firstCharacter = firstChar(lines[indexOfLine]);
                 
@@ -971,25 +948,22 @@ struct Account* getListofAccountFromFile(char* fileAddress, char* fileName, int*
                 
                 int startIndex = getTheStartIndex(fileName, firstChar(lines[indexOfLine]));
                 
-                
-                if(firstCharacter=='1')
+                if (firstCharacter=='1')
                 {
                     studentId = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='2')
+                else if (firstCharacter=='2')
                 {
                     password = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
             }//end of if
-            
-            
+               
         }//end of second for
         
         struct Account account = createAnAccount(studentId, password);
         listOfAccounts[numberOfAccountsReadFromFileSoFar] = account;
         
         numberOfAccountsReadFromFileSoFar++;
-        
         
     }//end of first for
     
@@ -1018,38 +992,34 @@ struct Course* getListOfCourseNameFromFile(char* fileAddress, char* fileName, in
     
     int numberOfRecords = numberOfLinesInTheFile / numberOfLinesPerRecord;
     
-    
     struct Course* listOfCourses = (struct Course*) malloc(numberOfRecords*sizeof(struct Course));
     
-    
-    for(int k=0; k<numberOfRecords; k++)
+    for (int k = 0; k < numberOfRecords; k++)
     {
         char* courseID = NULL;
         char* name = NULL;
         
-        for(int i=0; i<numberOfLinesPerRecord; i++)
+        for (int i = 0; i < numberOfLinesPerRecord; i++)
         {
             int indexOfLine = k*numberOfLinesPerRecord+i;
             
-            if(lines[indexOfLine]!=NULL)
+            if (lines[indexOfLine]!=NULL)
             {
-                //printf("\n%s\n", lines[indexOfLine]);
                 char firstCharacter = firstChar(lines[indexOfLine]);
                 
                 int lineLength = strLength(lines[indexOfLine]);
                 
                 int startIndex = getTheStartIndex(fileName, firstChar(lines[indexOfLine]));
                 
-                if(firstCharacter=='1')
+                if (firstCharacter=='1')
                 {
                     courseID = substring(lines[indexOfLine], startIndex+1, lineLength-2);
                 }
-                else if(firstCharacter=='2')
+                else if (firstCharacter=='2')
                 {
                     name = substring(lines[indexOfLine], startIndex+1, lineLength-2);
                 }
             }//end of if
-            
             
         }//end of second for
         
@@ -1057,7 +1027,6 @@ struct Course* getListOfCourseNameFromFile(char* fileAddress, char* fileName, in
         listOfCourses[numberOfStudentsReadFromFileSoFar] = course;
         
         numberOfStudentsReadFromFileSoFar++;
-        
         
     }//end of first for
     
@@ -1089,49 +1058,44 @@ struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* f
     struct StudentsCourse* listOfStudentCourses = (struct StudentsCourse*) malloc(numberOfRecords*sizeof(struct StudentsCourse));
     
     
-    for(int k=0; k<numberOfRecords; k++)
+    for (int k = 0; k < numberOfRecords; k++)
     {
         char* studentID = NULL;
         char* courseID = NULL;
         int mark = 0;
         
-        for(int i=0; i<numberOfLinesPerRecord; i++)
+        for (int i = 0; i < numberOfLinesPerRecord; i++)
         {
             int indexOfLine = k*numberOfLinesPerRecord+i;
             
-            if(lines[indexOfLine]!=NULL)
+            if (lines[indexOfLine]!=NULL)
             {
-                //printf("\n%s\n", lines[indexOfLine]);
                 char firstCharacter = firstChar(lines[indexOfLine]);
                 
                 int lineLength = strLength(lines[indexOfLine]);
                 
                 int startIndex = getTheStartIndex(fileName, firstChar(lines[indexOfLine]));
                 
-                if(firstCharacter=='1')
+                if (firstCharacter == '1')
                 {
                     studentID = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='2')
+                else if (firstCharacter == '2')
                 {
                     courseID = substring(lines[indexOfLine], startIndex, lineLength-2);
                 }
-                else if(firstCharacter=='3')
+                else if (firstCharacter == '3')
                 {
                     char* marks = substring(lines[indexOfLine], startIndex, lineLength-2);
                     mark = convertToNumber(marks);
                 }
             }//end of if
-            
-            
         }//end of second for
         
         struct StudentsCourse studentCourse = createAStudentCourse(studentID, courseID, mark);
         listOfStudentCourses[numberOfStudentCourseReadFromFileSoFar] = studentCourse;
         
         numberOfStudentCourseReadFromFileSoFar++;
-        
-        
     }//end of first for
     
     *numberOfCourses = numberOfStudentCourseReadFromFileSoFar;
