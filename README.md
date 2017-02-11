@@ -43,7 +43,8 @@ Select from the options:
 —-[2] Print my courses
 —-[3] Print my transcript
 —-[4] Print my GPA
-—-[5] Print my ranking among all students in the college —-[6] List all available courses
+—-[5] Print my ranking among all students in the college
+—-[6] List all available courses
 —-[7] List all students
 -—[8] Logout
 -—[9] Exit 
