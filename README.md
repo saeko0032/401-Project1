@@ -1,5 +1,8 @@
 # 401 Project1: Basic Educational Portal
 
+## Language
+ This program is written in C.
+
 ## Attachments
  There are 4 text files in addition to this project description. The name of the files are as
  following. These files are sample files and you can use them while you are implementing
