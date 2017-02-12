@@ -18,7 +18,6 @@
 
 #define FolderPath "/Users/Shared/textfiles/"
 
-
 struct Account
 {
     char* studentID;
@@ -71,7 +70,7 @@ int convertToNumber(char *);
 void loginUser(void);
 int judgeLoginUser(char* userName, char* password);
 int showMenu(void);
-float getMyGPA(struct Student myself, int numberOfStudentsCourses);
+float getStudentGPA(struct Student myself, int numberOfStudentsCourses);
 
 // menu method
 void printMyCertificate(struct Student);
@@ -348,7 +347,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
             }
         }
     }
-    float myGPA = getMyGPA(myself, numberOfStudentsCourses);
+    float myGPA = getStudentGPA(myself, numberOfStudentsCourses);
     printf("YOUR GPA IS:%.2f\n", myGPA);
     fflush(stdout);
     sleep(4);
@@ -359,7 +358,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
  */
 void printMyGPA(struct Student myself, int numberOfStudentsCourses)
 {
-    float GPA = getMyGPA(myself, numberOfStudentsCourses);
+    float GPA = getStudentGPA(myself, numberOfStudentsCourses);
     
     if(strcmp(myself.gender, "male") == 0){
         printf("Hi Mr. %s,\n",myself.name);
@@ -379,7 +378,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
     strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
     printf("%s,\n", myself.name);
     
-    float myGPA = getMyGPA(myself, numberOfStudentsCourses);
+    float myGPA = getStudentGPA(myself, numberOfStudentsCourses);
     
     float listOfGPA[numberOfStudentsCourses];
     char* userList[numberOfStudentsCourses];
@@ -396,7 +395,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
                 if(strncmp(userList[i],tempStudent.studentID,7) != 0)
                 {
                     userList[counter] = tempStudent.studentID;
-                    float tempGPA = getMyGPA(tempStudent, numberOfStudentsCourses);
+                    float tempGPA = getStudentGPA(tempStudent, numberOfStudentsCourses);
                     listOfGPA[counter] = tempGPA;
                     counter++;
                 }
@@ -478,7 +477,7 @@ void logoutUser(struct Student myself)
     
 }
 
-float getMyGPA(struct Student myself, int numberOfStudentsCourses)
+float getStudentGPA(struct Student myself, int numberOfStudentsCourses)
 {
     float mark = 0;
     int count = 0;
