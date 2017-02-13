@@ -10,7 +10,6 @@
 #include <string.h>
 #include <unistd.h>
 
-
 #define CoursesFile "Courses.txt"
 #define AccountsFile "Accounts.txt"
 #define StudentsFile "Students.txt"
@@ -56,7 +55,6 @@ struct Course* listOfCourses;
 struct StudentsCourse* listOfStudentCourses;
 static char* myStudentID;
 
-// ali methods
 char firstChar(char* line);
 int strLength(char* line);
 char* substring(char* line, int startIndex, int endIndex);
