@@ -97,8 +97,6 @@ struct Course* getListOfCourseNameFromFile(char* fileAddress, char* fileName, in
 struct StudentsCourse createAStudentCourse(char* studentID, char* courseID, int mark);
 struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* fileName, int* numberOfCourses);
 
-
-
 int main(int argc, const char * argv[]) {
     loginUser();
     while(showMenu());
@@ -114,15 +112,15 @@ void loginUser(void)
     printf("************************************************************\n");
     printf("Username:");
     
-    fgets(userName, 256, stdin);
+    fgets(userName, 16, stdin);
     if(userName[0] == '\n')
     {
-        fgets(userName, 256, stdin);
+        fgets(userName, 16, stdin);
     }
     userName[strlen(userName) - 1] = '\0';
     
     printf("Password:");
-    fgets(password, 256, stdin);
+    fgets(password, 16, stdin);
     password[strlen(password) - 1] = '\0';
     
     int loginResult = judgeLoginUser(userName, password);
