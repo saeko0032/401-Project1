@@ -271,7 +271,7 @@ void printMyCertificate(struct Student myself)
     printf("\n");
     
     printf("This is to certify that " );
-    strcmp(myself.gender, "Male") == 0 ? printf("Mr.") : printf("Ms.");
+    strcmp(myself.gender, "male") == 0 ? printf("Mr.") : printf("Ms.");
     printf("%s", myself.name);
     
     printf(" with student id %s", myself.studentID);
@@ -299,6 +299,7 @@ void printMyCertificate(struct Student myself)
  */
 void printMyCourses(struct Student myself,int numberOfCourses)
 {
+    int counter = 1;
     if (strcmp(myself.gender, "male") == 0)
     {
         printf("Hi Mr. %s,\n", myself.name);
@@ -310,10 +311,13 @@ void printMyCourses(struct Student myself,int numberOfCourses)
     printf("You have taken the following courses:\n");
     for (int i = 0; i < numberOfCourses; i++)
     {
-        for (int j = i; j < myself.numberOfCourses; j++)
+        for (int j = 0; j < myself.numberOfCourses; j++)
         {
             if (strcmp(listOfCourses[i].courseID, myself.courses[j]) == 0)
-                printf("%d) %s: %s\n",i+1, myself.courses[j], listOfCourses[i].name);
+            {
+                printf("%d) %s: %s\n",counter, myself.courses[j], listOfCourses[i].name);
+                counter++;
+            }
         }
     }
     sleep(4);
