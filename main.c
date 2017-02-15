@@ -330,7 +330,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses, int n
 {
     printf("Hi ");
     strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
-    printf("%s\n", myself.name);
+    printf("%s,\n", myself.name);
     
     printf("Here is your transcript:\n");
     
@@ -350,11 +350,11 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses, int n
                     counter++;
                 }
             }
-            printf(" %d\n",listOfStudentCourses[j].mark);
+            printf(": %d\n",listOfStudentCourses[j].mark);
         }
     }
     float myGPA = getMyGPA(myself, numberOfStudentsCourses);
-    printf("YOUR GPA IS:%.2f\n", myGPA);
+    printf("YOUR GPA IS: %.2f\n", myGPA);
     fflush(stdout);
     sleep(4);
 }
