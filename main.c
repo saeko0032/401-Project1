@@ -76,7 +76,7 @@ float getMyGPA(struct Student myself, int numberOfStudentsCourses);
 // menu method
 void printMyCertificate(struct Student);
 void printMyCourses(struct Student myself, int numberOfCourses);
-void printMyTranscript(struct Student, int numberOfStudentsCourses);
+void printMyTranscript(struct Student, int numberOfStudentsCourses, int numberOfCourses);
 void printMyGPA(struct Student myself, int numberOfStudentsCourses);
 void printMyRanking(struct Student, int numberOfStudentsCourses);
 void listAllCourses(struct Course* listOfCourses, int numberOfCourses);
@@ -235,7 +235,7 @@ int showMenu(void)
             printMyCourses(myself,numberOfCourses);
             return EXIT_FAILURE;
         case 3:
-            printMyTranscript(myself, numberOfStudentsCourses);
+            printMyTranscript(myself, numberOfStudentsCourses, numberOfCourses);
             return EXIT_FAILURE;
         case 4:
             printMyGPA(myself, numberOfStudentsCourses);
@@ -335,22 +335,22 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
     printf("Here is your transcript:\n");
     
     int counter = 1;
-    for (int i = 0; i < myself.numberOfCourses; i++)
+    for(int j = 0; j < numberOfStudentsCourses; j++)
     {
-        for (int j = 0; j < numberOfStudentsCourses; j++)
+        // check student ID is same as mine
+        if(strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
         {
-            
-            if (strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
+            printf("%d) ",counter);
+            printf("%s:",listOfStudentCourses[j].courseID);
+            for(int i = 0; i < numberOfCourses; i++)
             {
-                printf("%d) ", counter);
-                printf("%s: %s:", listOfCourses[j].courseID, listOfCourses[j].name);
-                if (strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
+                if(strcmp(listOfStudentCourses[j].courseID, listOfCourses[i].courseID) == 0)
                 {
-                    printf(" %d\n", listOfStudentCourses[j].mark);
+                    printf(" %s",listOfCourses[i].name);
+                    counter++;
                 }
-                counter++;
-                break;
             }
+            printf(" %d\n",listOfStudentCourses[j].mark);
         }
     }
     float myGPA = getMyGPA(myself, numberOfStudentsCourses);
