@@ -326,7 +326,7 @@ void printMyCourses(struct Student myself,int numberOfCourses)
 /**
  This function is to print my transcript.
  */
-void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
+void printMyTranscript(struct Student myself, int numberOfStudentsCourses, int numberOfCourses)
 {
     printf("Hi ");
     strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
