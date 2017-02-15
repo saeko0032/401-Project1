@@ -338,11 +338,11 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
             
             if (strcmp(myself.courses[i], listOfCourses[j].courseID) == 0)
             {
-                printf("%d) ", counter);
-                printf("%s: %s:", listOfCourses[j].courseID, listOfCourses[j].name);
-                if (strcmp(myStudentID, listOfStudentCourses[j].studentID) == 0)
+                if (strcmp(myStudentID, listOfStudentCourses[i].studentID) == 0)
                 {
-                    printf(" %d\n", listOfStudentCourses[j].mark);
+                    printf("%d) ", counter);
+                    printf("%s: %s:", listOfCourses[i].courseID, listOfCourses[i].name);
+                    printf(" %d\n", listOfStudentCourses[i].mark);
                 }
                 counter++;
                 break;
