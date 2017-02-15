@@ -1,6 +1,6 @@
 1studentID:"7813007"
 2name:"firstname lastname1"
-3gender:"male"
+3gender:”female”
 4grade:"2"
 5address:"850 West Hastings, Vancouver"
 6admission_year:"2012"
