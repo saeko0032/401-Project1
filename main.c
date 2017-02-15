@@ -10,14 +10,12 @@
 #include <string.h>
 #include <unistd.h>
 
-
 #define CoursesFile "Courses.txt"
 #define AccountsFile "Accounts.txt"
 #define StudentsFile "Students.txt"
 #define StudentsCoursesFile "StudentsCourses.txt"
 
 #define FolderPath "/Users/Shared/textfiles/"
-
 
 struct Account
 {
@@ -57,7 +55,6 @@ struct Course* listOfCourses;
 struct StudentsCourse* listOfStudentCourses;
 static char* myStudentID;
 
-// ali methods
 char firstChar(char* line);
 int strLength(char* line);
 char* substring(char* line, int startIndex, int endIndex);
@@ -71,7 +68,7 @@ int convertToNumber(char *);
 void loginUser(void);
 int judgeLoginUser(char* userName, char* password);
 int showMenu(void);
-float getMyGPA(struct Student myself, int numberOfStudentsCourses);
+float getStudentGPA(struct Student myself, int numberOfStudentsCourses);
 
 // menu method
 void printMyCertificate(struct Student);
@@ -100,8 +97,6 @@ struct Course* getListOfCourseNameFromFile(char* fileAddress, char* fileName, in
 struct StudentsCourse createAStudentCourse(char* studentID, char* courseID, int mark);
 struct StudentsCourse* getListOfStudentCourseFromFile(char* fileAddress, char* fileName, int* numberOfCourses);
 
-
-
 int main(int argc, const char * argv[]) {
     loginUser();
     while(showMenu());
@@ -118,15 +113,15 @@ void loginUser(void)
     printf("************************************************************\n");
     printf("Username:");
     
-    fgets(userName, 256, stdin);
+    fgets(userName, 16, stdin);
     if(userName[0] == '\n')
     {
-        fgets(userName, 256, stdin);
+        fgets(userName, 16, stdin);
     }
     userName[strlen(userName) - 1] = '\0';
     
     printf("Password:");
-    fgets(password, 256, stdin);
+    fgets(password, 16, stdin);
     password[strlen(password) - 1] = '\0';
     
     int loginResult = judgeLoginUser(userName, password);
@@ -349,7 +344,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
             }
         }
     }
-    float myGPA = getMyGPA(myself, numberOfStudentsCourses);
+    float myGPA = getStudentGPA(myself, numberOfStudentsCourses);
     printf("YOUR GPA IS:%.2f\n", myGPA);
     fflush(stdout);
     sleep(4);
@@ -360,7 +355,7 @@ void printMyTranscript(struct Student myself, int numberOfStudentsCourses)
  */
 void printMyGPA(struct Student myself, int numberOfStudentsCourses)
 {
-    float GPA = getMyGPA(myself, numberOfStudentsCourses);
+    float GPA = getStudentGPA(myself, numberOfStudentsCourses);
     
     if(strcmp(myself.gender, "male") == 0){
         printf("Hi Mr. %s,\n", myself.name);
@@ -380,7 +375,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
     strcmp(myself.gender, "male") == 0 ? printf("Mr. ") : printf("Ms. ");
     printf("%s,\n", myself.name);
     
-    float myGPA = getMyGPA(myself, numberOfStudentsCourses);
+    float myGPA = getStudentGPA(myself, numberOfStudentsCourses);
     
     float listOfGPA[numberOfStudentsCourses];
     char* userList[numberOfStudentsCourses];
@@ -397,7 +392,7 @@ void printMyRanking(struct Student myself, int numberOfStudentsCourses)
                 if(strncmp(userList[i],tempStudent.studentID,7) != 0)
                 {
                     userList[counter] = tempStudent.studentID;
-                    float tempGPA = getMyGPA(tempStudent, numberOfStudentsCourses);
+                    float tempGPA = getStudentGPA(tempStudent, numberOfStudentsCourses);
                     listOfGPA[counter] = tempGPA;
                     counter++;
                 }
@@ -478,7 +473,7 @@ void logoutUser(struct Student myself)
     showMenu();
 }
 
-float getMyGPA(struct Student myself, int numberOfStudentsCourses)
+float getStudentGPA(struct Student myself, int numberOfStudentsCourses)
 {
     float mark = 0;
     int count = 0;
