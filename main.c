@@ -207,6 +207,7 @@ int showMenu(void)
     if (intNumber < 0 || 10 <= intNumber)
     {
         printf("You entered wrong number\nbye\n");
+        return EXIT_FAILURE;
     }
     
     char* coursesfileAddress = FolderPath CoursesFile;
