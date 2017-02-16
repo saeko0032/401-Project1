@@ -25,8 +25,8 @@ struct Account
     char* password;
 };
 
-struct Student {
-    
+struct Student 
+{
     char* studentID;
     char* name;
     char* gender;
@@ -496,7 +496,15 @@ float getMyGPA(struct Student myself, int numberOfStudentsCourses)
             count++;
         }
     }
-    GPA = mark / count;
+    if (mark == 0)
+    {
+        // error handling
+        GPA = 0;
+    }
+    else
+    {
+        GPA = mark / count;    
+    }
     return GPA;
 }
 
